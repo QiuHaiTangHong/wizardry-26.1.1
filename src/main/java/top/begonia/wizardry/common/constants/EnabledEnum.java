@@ -1,4 +1,4 @@
-package top.begonia.wizardry.common.data.spell.constants;
+package top.begonia.wizardry.common.constants;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.util.StringRepresentable;

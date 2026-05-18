@@ -1,0 +1,21 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:component",
+    "component": "wizardry:mana_flask_type",
+    "cases": [
+      {
+        "when": "small",
+        "model": { "type": "minecraft:model", "model": "wizardry:item/small_mana_flask" }
+      },
+      {
+        "when": "medium",
+        "model": { "type": "minecraft:model", "model": "wizardry:item/medium_mana_flask" }
+      },
+      {
+        "when": "large",
+        "model": { "type": "minecraft:model", "model": "wizardry:item/large_mana_flask" }
+      }
+    ]
+  }
+}

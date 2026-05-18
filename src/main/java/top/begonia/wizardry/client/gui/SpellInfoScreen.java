@@ -14,7 +14,7 @@ import top.begonia.wizardry.Wizardry;
 import top.begonia.wizardry.client.config.ClientConfig;
 import top.begonia.wizardry.client.data.ClientGlyphData;
 import top.begonia.wizardry.client.util.ClientHelper;
-import top.begonia.wizardry.common.data.spell.constants.TierEnum;
+import top.begonia.wizardry.common.constants.TierEnum;
 import top.begonia.wizardry.common.registry.WizardrySounds;
 import top.begonia.wizardry.common.registry.WizardrySpells;
 import top.begonia.wizardry.common.spell.AbstractSpell;

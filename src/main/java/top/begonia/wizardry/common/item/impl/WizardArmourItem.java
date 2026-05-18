@@ -4,7 +4,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import top.begonia.wizardry.common.data.spell.constants.ElementEnum;
+import top.begonia.wizardry.common.constants.ElementEnum;
 import top.begonia.wizardry.common.item.IManaStoringItem;
 import top.begonia.wizardry.common.item.IWorkbenchItem;
 

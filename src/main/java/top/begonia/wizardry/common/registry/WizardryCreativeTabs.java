@@ -22,13 +22,11 @@ public final class WizardryCreativeTabs {
     private WizardryCreativeTabs() {
     }
 
-    private static final Map<TabsEnum, List<Supplier<? extends ItemLike>>> TABS_CONTENTS = new EnumMap<>(TabsEnum.class);
-    private static final Map<TabsEnum, List<Consumer<BuildCreativeModeTabContentsEvent>>> SPECIAL_CONTENTS = new EnumMap<>(TabsEnum.class);
+    private static final Map<TabsEnum, List<Consumer<BuildCreativeModeTabContentsEvent>>> TABS_CONTENTS = new EnumMap<>(TabsEnum.class);
 
     static {
         for (TabsEnum type : TabsEnum.values()) {
             TABS_CONTENTS.put(type, new ArrayList<>());
-            SPECIAL_CONTENTS.put(type, new ArrayList<>());
         }
     }
 
@@ -53,20 +51,16 @@ public final class WizardryCreativeTabs {
     }
 
     public static void addToTabs(TabsEnum tabsEnum, Supplier<? extends ItemLike> item) {
-        TABS_CONTENTS.get(tabsEnum).add(item);
+        TABS_CONTENTS.get(tabsEnum).add(event -> event.accept(item.get()));
     }
 
     public static void addSpecialToTabs(TabsEnum tabsEnum, Consumer<BuildCreativeModeTabContentsEvent> populator) {
-        SPECIAL_CONTENTS.get(tabsEnum).add(populator);
+        TABS_CONTENTS.get(tabsEnum).add(populator);
     }
 
     public static void addItemsToEvent(BuildCreativeModeTabContentsEvent event, TabsEnum tabsEnum) {
-        List<Supplier<? extends ItemLike>> items = TABS_CONTENTS.get(tabsEnum);
-        for (Supplier<? extends ItemLike> itemSupplier : items) {
-            event.accept(itemSupplier.get());
-        }
-        List<Consumer<BuildCreativeModeTabContentsEvent>> specialPopulators = SPECIAL_CONTENTS.get(tabsEnum);
-        for (Consumer<BuildCreativeModeTabContentsEvent> populator : specialPopulators) {
+        List<Consumer<BuildCreativeModeTabContentsEvent>> contents = TABS_CONTENTS.get(tabsEnum);
+        for (Consumer<BuildCreativeModeTabContentsEvent> populator : contents) {
             populator.accept(event);
         }
     }

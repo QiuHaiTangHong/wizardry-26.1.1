@@ -10,7 +10,7 @@ import top.begonia.wizardry.Wizardry;
 import top.begonia.wizardry.common.inventory.menu.ArcaneWorkbenchMenu;
 import top.begonia.wizardry.common.inventory.menu.BookshelfMenu;
 
-public class WizardryMenus {
+public final class WizardryMenus {
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, Wizardry.MODID);
 
     public static final DeferredHolder<MenuType<?>, MenuType<ArcaneWorkbenchMenu>> ARCANE_WORKBENCH = MENUS.register(

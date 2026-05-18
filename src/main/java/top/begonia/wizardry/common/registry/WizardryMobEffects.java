@@ -12,7 +12,7 @@ import top.begonia.wizardry.common.potion.CurseUndeath;
 import top.begonia.wizardry.common.potion.IronFleshPotion;
 import top.begonia.wizardry.common.potion.MagicEffectPotion;
 
-public class WizardryMobEffects {
+public final class WizardryMobEffects {
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(Registries.MOB_EFFECT, Wizardry.MODID);
 
     public static final DeferredHolder<MobEffect, MagicEffectPotion> FROST = register("frost", MobEffectCategory.HARMFUL, 0x38ddec);

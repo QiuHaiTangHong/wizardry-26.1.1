@@ -1,4 +1,4 @@
-package top.begonia.wizardry.common.data.spell.constants;
+package top.begonia.wizardry.common.constants;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -74,7 +74,7 @@ public enum ElementEnum implements StringRepresentable {
         return this.colour;
     }
 
-    public String getColor(){
+    public String getColor() {
         if (colour.getColor() != null) {
             return colour.getColor().serialize();
         }

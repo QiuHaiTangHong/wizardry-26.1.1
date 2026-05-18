@@ -59,6 +59,30 @@ public final class WizardryBlocks {
             () -> BlockBehaviour.Properties.ofFullCopy(Blocks.ENCHANTING_TABLE).noOcclusion()
     );
 
+    public static final DeferredBlock<CrystalFlowerBlock> CRYSTAL_FLOWER = BLOCKS.registerBlock(
+            "crystal_flower",
+            CrystalFlowerBlock::new,
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.ENCHANTING_TABLE).noOcclusion()
+    );
+
+    public static final DeferredBlock<TransportationStoneBlock> TRANSPORTATION_STONE = BLOCKS.registerBlock(
+            "transportation_stone",
+            TransportationStoneBlock::new,
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.ENCHANTING_TABLE).noOcclusion()
+    );
+
+    public static final DeferredBlock<ReceptacleBlock> RECEPTACLE = BLOCKS.registerBlock(
+            "receptacle",
+            ReceptacleBlock::new,
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.ENCHANTING_TABLE).noOcclusion()
+    );
+
+    public static final DeferredBlock<ImbuementAltarBlock> IMBUEMENT_ALTAR = BLOCKS.registerBlock(
+            "imbuement_altar",
+            ImbuementAltarBlock::new,
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.ENCHANTING_TABLE).noOcclusion()
+    );
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }

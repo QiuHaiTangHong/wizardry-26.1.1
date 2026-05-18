@@ -15,7 +15,7 @@ import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 import top.begonia.wizardry.Wizardry;
-import top.begonia.wizardry.common.data.spell.constants.ElementEnum;
+import top.begonia.wizardry.common.constants.ElementEnum;
 import top.begonia.wizardry.common.registry.WizardrySounds;
 
 import javax.annotation.Nullable;
@@ -60,11 +60,9 @@ public final class ArmourMaterialHelper {
         String path = assetId.get().identifier().getPath();
         if (path.contains("wizard")) {
             return ModelLayer.WIZARD;
-        }
-        else if (path.contains("sage")) {
+        } else if (path.contains("sage")) {
             return ModelLayer.SAGE;
-        }
-        else if (path.contains("battlemage") || path.contains("warlock")) {
+        } else if (path.contains("battlemage") || path.contains("warlock")) {
             return ModelLayer.ROBE;
         }
         return null;

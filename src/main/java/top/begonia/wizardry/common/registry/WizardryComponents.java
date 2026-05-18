@@ -9,6 +9,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import top.begonia.wizardry.Wizardry;
+import top.begonia.wizardry.common.constants.ArtefactTypeEnum;
+import top.begonia.wizardry.common.constants.ManaFlaskTypeEnum;
 import top.begonia.wizardry.common.data.WandUpgrades;
 import top.begonia.wizardry.common.spell.AbstractSpell;
 
@@ -108,6 +110,18 @@ public final class WizardryComponents {
                     builder -> builder
                             .persistent(Codec.STRING)
                             .networkSynchronized(ByteBufCodecs.STRING_UTF8)
+            );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ManaFlaskTypeEnum>> MANA_FLASK_TYPE =
+            COMPONENTS.registerComponentType("mana_flask_type",
+                    builder -> builder
+                            .persistent(ManaFlaskTypeEnum.CODEC)
+                            .networkSynchronized(ManaFlaskTypeEnum.STREAM_CODEC)
+            );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ArtefactTypeEnum>> ARTEFACT_TYPE =
+            COMPONENTS.registerComponentType("artefact_type",
+                    builder -> builder
+                            .persistent(ArtefactTypeEnum.CODEC)
+                            .networkSynchronized(ArtefactTypeEnum.STREAM_CODEC)
             );
 
     public static void register(IEventBus eventBus) {

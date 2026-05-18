@@ -10,10 +10,12 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import top.begonia.wizardry.Wizardry;
 import top.begonia.wizardry.common.entity.block.ArcaneWorkbenchBlockEntity;
 import top.begonia.wizardry.common.entity.block.BookshelfBlockEntity;
+import top.begonia.wizardry.common.entity.block.ImbuementAltarBlockEntity;
+import top.begonia.wizardry.common.entity.block.ReceptacleBlockEntity;
 
 import java.util.function.Supplier;
 
-public class WizardryBlockEntities {
+public final class WizardryBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Wizardry.MODID);
 
     @SafeVarargs
@@ -34,6 +36,18 @@ public class WizardryBlockEntities {
             "bookshelf",
             BookshelfBlockEntity::new,
             WizardryBlocks.BOOKSHELF
+    );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ReceptacleBlockEntity>> RECEPTACLE = registerBlockEntity(
+            "receptacle",
+            ReceptacleBlockEntity::new,
+            WizardryBlocks.RECEPTACLE
+    );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ImbuementAltarBlockEntity>> IMBUEMENT_ALTAR = registerBlockEntity(
+            "imbuement_altar",
+            ImbuementAltarBlockEntity::new,
+            WizardryBlocks.IMBUEMENT_ALTAR
     );
 
     public static void register(IEventBus eventBus) {

@@ -16,7 +16,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
 import top.begonia.wizardry.client.gui.SpellBookScreen;
-import top.begonia.wizardry.common.data.spell.constants.TierEnum;
+import top.begonia.wizardry.common.constants.TierEnum;
 import top.begonia.wizardry.common.registry.WizardryComponents;
 import top.begonia.wizardry.common.spell.AbstractSpell;
 

@@ -8,12 +8,13 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
 
 @Mod(value = Wizardry.MODID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = Wizardry.MODID, value = Dist.CLIENT)
 public class WizardryClient {
-    public WizardryClient(ModContainer container) {
+    public WizardryClient(@NonNull ModContainer container) {
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
 

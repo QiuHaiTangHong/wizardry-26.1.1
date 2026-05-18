@@ -7,7 +7,7 @@ import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import top.begonia.wizardry.common.data.spell.constants.TierEnum;
+import top.begonia.wizardry.common.constants.TierEnum;
 import top.begonia.wizardry.common.registry.WizardrySpells;
 import top.begonia.wizardry.common.spell.AbstractSpell;
 

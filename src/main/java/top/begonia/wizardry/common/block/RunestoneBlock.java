@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MapColor;
 import org.jspecify.annotations.NonNull;
-import top.begonia.wizardry.common.data.spell.constants.ElementEnum;
+import top.begonia.wizardry.common.constants.ElementEnum;
 
 public class RunestoneBlock extends Block {
 

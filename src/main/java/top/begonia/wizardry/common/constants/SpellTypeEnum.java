@@ -1,10 +1,9 @@
-package top.begonia.wizardry.common.data.spell.constants;
+package top.begonia.wizardry.common.constants;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.StringRepresentable;
 import org.jspecify.annotations.NonNull;
-import top.begonia.wizardry.Wizardry;
 
 public enum SpellTypeEnum implements StringRepresentable {
 

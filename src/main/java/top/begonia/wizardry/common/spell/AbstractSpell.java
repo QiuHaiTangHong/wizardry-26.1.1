@@ -16,10 +16,10 @@ import net.minecraft.world.item.ItemUseAnimation;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
 import top.begonia.wizardry.common.data.spell.SpellPropertiesData;
-import top.begonia.wizardry.common.data.spell.constants.ElementEnum;
-import top.begonia.wizardry.common.data.spell.constants.EnabledEnum;
-import top.begonia.wizardry.common.data.spell.constants.SpellTypeEnum;
-import top.begonia.wizardry.common.data.spell.constants.TierEnum;
+import top.begonia.wizardry.common.constants.ElementEnum;
+import top.begonia.wizardry.common.constants.EnabledEnum;
+import top.begonia.wizardry.common.constants.SpellTypeEnum;
+import top.begonia.wizardry.common.constants.TierEnum;
 import top.begonia.wizardry.common.registry.WizardryItems;
 import top.begonia.wizardry.common.registry.WizardrySpells;
 

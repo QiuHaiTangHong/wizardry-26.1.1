@@ -5,7 +5,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import top.begonia.wizardry.common.data.spell.IWizardryProperty;
-import top.begonia.wizardry.common.data.spell.constants.EnabledEnum;
+import top.begonia.wizardry.common.constants.EnabledEnum;
 
 import java.util.Collections;
 import java.util.EnumMap;

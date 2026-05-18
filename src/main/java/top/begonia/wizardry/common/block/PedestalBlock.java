@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
-import top.begonia.wizardry.common.data.spell.constants.ElementEnum;
+import top.begonia.wizardry.common.constants.ElementEnum;
 
 public class PedestalBlock extends BaseEntityBlock {
     public static final MapCodec<PedestalBlock> CODEC = simpleCodec(PedestalBlock::new);

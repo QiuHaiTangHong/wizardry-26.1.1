@@ -13,8 +13,8 @@ import top.begonia.wizardry.client.layout.atom.LinkElement;
 import top.begonia.wizardry.client.layout.atom.TextElement;
 import top.begonia.wizardry.client.layout.hybrid.CaptionImageElement;
 import top.begonia.wizardry.client.layout.hybrid.LineElement;
-import top.begonia.wizardry.common.data.spell.constants.ElementEnum;
-import top.begonia.wizardry.common.data.spell.constants.TierEnum;
+import top.begonia.wizardry.common.constants.ElementEnum;
+import top.begonia.wizardry.common.constants.TierEnum;
 import top.begonia.wizardry.server.config.ServerConfig;
 
 import java.net.URI;
