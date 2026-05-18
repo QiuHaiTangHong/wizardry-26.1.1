@@ -2,6 +2,9 @@ package top.begonia.wizardry.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -14,6 +17,8 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Vector3fc;
@@ -42,7 +47,17 @@ public class BookshelfRender implements BlockEntityRenderer<BookshelfBlockEntity
     public void extractRenderState(@NonNull BookshelfBlockEntity blockEntity, @NonNull BookshelfRenderState state, float partialTicks, @NonNull Vec3 cameraPosition, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
         BlockEntityRenderState.extractBase(blockEntity, state, breakProgress);
         state.clean();
+        state.blockPos = blockEntity.getBlockPos();
+        state.blockState = blockEntity.getBlockState();
         BookshelfBookSettings settings = WizardryDataManager.getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "bookshelf_book_settings"), BookshelfBookSettings.class).orElse(null);
+        BlockState blockState = blockEntity.getBlockState();
+        Direction facing = Direction.NORTH;
+        if (blockState.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
+            facing = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
+        } else if (blockState.hasProperty(BlockStateProperties.FACING)) {
+            facing = blockState.getValue(BlockStateProperties.FACING);
+        }
+        state.facing = facing;
         for (int i = 0; i < state.displayTextures.size(); i++) {
             ItemStack itemStack = blockEntity.inventory.getStack(i);
             if (!itemStack.isEmpty()) {
@@ -55,6 +70,19 @@ public class BookshelfRender implements BlockEntityRenderer<BookshelfBlockEntity
 
     @Override
     public void submit(@NonNull BookshelfRenderState state, @NonNull PoseStack poseStack, @NonNull SubmitNodeCollector collector, @NonNull CameraRenderState cameraRenderState) {
+        if (state.blockState == null || state.blockPos == null) {
+            return;
+        }
+
+        ClientLevel level = Minecraft.getInstance().level;
+        if (level == null) {
+            return;
+        }
+        poseStack.pushPose();
+        poseStack.translate(0.5F, 0.5F, 0.5F);
+        float yRot = state.facing.toYRot();
+        poseStack.mulPose(Axis.YP.rotationDegrees(yRot));
+        poseStack.translate(-0.5F, -0.5F, -0.5F);
         for (int i = 0; i < BookshelfBlockEntity.SLOT_COUNT; i++) {
             Identifier textureId = state.displayTextures.get(i);
             List<OnlyModelQuads.QuadGeometry> geometries = state.displayGeometries.get(i);
@@ -72,6 +100,7 @@ public class BookshelfRender implements BlockEntityRenderer<BookshelfBlockEntity
                 }
             });
         }
+        poseStack.popPose();
     }
 
     private void addVertexWithLongUV(

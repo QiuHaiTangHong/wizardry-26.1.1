@@ -1,10 +1,13 @@
 package top.begonia.wizardry.client.render.state;
 
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.client.data.definition.bookshelf.BookshelfBookSettings;
 import top.begonia.wizardry.client.data.definition.model.OnlyModelQuads;
@@ -16,6 +19,9 @@ import java.util.List;
 public class BookshelfRenderState extends BlockEntityRenderState {
     public final List<Identifier> displayTextures = new ArrayList<>(BookshelfBlockEntity.SLOT_COUNT);
     public final List<List<OnlyModelQuads.QuadGeometry>> displayGeometries = new ArrayList<>(BookshelfBlockEntity.SLOT_COUNT);
+    public Direction facing;
+    public BlockPos blockPos;
+    public BlockState blockState;
 
     public BookshelfRenderState() {
         for (int i = 0; i < BookshelfBlockEntity.SLOT_COUNT; i++) {

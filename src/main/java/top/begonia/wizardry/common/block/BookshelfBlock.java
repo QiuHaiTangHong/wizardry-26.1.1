@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -26,7 +25,6 @@ public class BookshelfBlock extends BaseEntityBlock {
     public static final MapCodec<BookshelfBlock> CODEC = simpleCodec(BookshelfBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final EnumProperty<WoodTypeEnum> BOOKSHELF_WOOD_TYPE = EnumProperty.create("bookshelf_wood_type", WoodTypeEnum.class);
-    public static final IntegerProperty SLOT_INDEX = IntegerProperty.create("slot_index", 0, BookshelfBlockEntity.SLOT_COUNT);
 
     public BookshelfBlock(Properties properties) {
         super(properties);
