@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.client.data.definition.bookshelf.BookshelfBookSettings;
 import top.begonia.wizardry.client.data.definition.model.OnlyModelQuads;
-import top.begonia.wizardry.common.entity.block.BookshelfBlockEntity;
+import top.begonia.wizardry.core.entity.block.BookshelfBlockEntity;
 
 import java.util.ArrayList;
 import java.util.List;

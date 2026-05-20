@@ -3,7 +3,7 @@ package top.begonia.wizardry.client.layout.util;
 import net.minecraft.resources.Identifier;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
-import top.begonia.wizardry.client.data.WizardryDataManager;
+import top.begonia.wizardry.client.data.WizardryClientDataManager;
 import top.begonia.wizardry.client.data.definition.handbook.HandbookData;
 import top.begonia.wizardry.client.data.definition.handbook.part.SectionData;
 import top.begonia.wizardry.client.layout.container.handbook.SectionElement;
@@ -25,7 +25,7 @@ public final class PageTurner {
 
     public PageTurner() {
         Identifier path = Identifier.fromNamespaceAndPath(Wizardry.MODID, "handbook");
-        handbookData = WizardryDataManager.getData(path, HandbookData.class).orElse(null);
+        handbookData = WizardryClientDataManager.getData(path, HandbookData.class).orElse(null);
         this.sectionCacheEndIndex = 0;
     }
 

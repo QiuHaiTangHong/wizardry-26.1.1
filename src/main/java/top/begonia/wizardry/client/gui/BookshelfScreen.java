@@ -8,7 +8,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
-import top.begonia.wizardry.common.inventory.menu.BookshelfMenu;
+import top.begonia.wizardry.core.inventory.menu.BookshelfMenu;
 
 public class BookshelfScreen extends AbstractContainerScreen<BookshelfMenu> {
 

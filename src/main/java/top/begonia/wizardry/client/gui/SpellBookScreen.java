@@ -3,9 +3,9 @@ package top.begonia.wizardry.client.gui;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
-import top.begonia.wizardry.common.item.impl.SpellBookItem;
-import top.begonia.wizardry.common.registry.WizardryComponents;
-import top.begonia.wizardry.common.spell.AbstractSpell;
+import top.begonia.wizardry.core.item.impl.SpellBookItem;
+import top.begonia.wizardry.core.registry.WizardryComponents;
+import top.begonia.wizardry.core.spell.AbstractSpell;
 
 import java.util.Objects;
 

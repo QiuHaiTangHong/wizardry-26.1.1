@@ -14,7 +14,7 @@ import top.begonia.wizardry.client.gui.widget.InvisibleButton;
 import top.begonia.wizardry.client.gui.widget.TurnPageButton;
 import top.begonia.wizardry.client.layout.container.handbook.HandbookElement;
 import top.begonia.wizardry.client.layout.util.Context;
-import top.begonia.wizardry.common.registry.WizardrySounds;
+import top.begonia.wizardry.core.registry.WizardrySounds;
 
 public class WizardHandbookScreen extends Screen {
     private Button bookmark;

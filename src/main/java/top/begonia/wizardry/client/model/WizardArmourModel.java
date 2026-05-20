@@ -21,7 +21,7 @@ public class WizardArmourModel<T extends HumanoidRenderState> extends HumanoidMo
         this.hatBobble = this.head.getChild("hat_bobble");
     }
 
-    public static LayerDefinition createLayerDefinition(CubeDeformation delta) {
+    public static LayerDefinition createLayerDefinition(CubeDeformation delta, int textureWidth, int textureHeight) {
         MeshDefinition mesh = HumanoidModel.createMesh(delta, 0.0F);
         PartDefinition root = mesh.getRoot();
         root.addOrReplaceChild("body",
@@ -71,7 +71,7 @@ public class WizardArmourModel<T extends HumanoidRenderState> extends HumanoidMo
                         .mirror()
                         .addBox(-4.0F, 0.0F, -2.0F, 8.0F, 7.0F, 4.0F, delta),
                 PartPose.offset(0.0F, 12.0F, 0.0F));
-        return LayerDefinition.create(mesh, 64, 64);
+        return LayerDefinition.create(mesh, textureWidth, textureHeight);
     }
 
     @Override

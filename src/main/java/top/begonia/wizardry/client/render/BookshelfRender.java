@@ -24,11 +24,11 @@ import org.joml.Matrix4f;
 import org.joml.Vector3fc;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
-import top.begonia.wizardry.client.data.WizardryDataManager;
+import top.begonia.wizardry.client.data.WizardryClientDataManager;
 import top.begonia.wizardry.client.data.definition.bookshelf.BookshelfBookSettings;
 import top.begonia.wizardry.client.data.definition.model.OnlyModelQuads;
 import top.begonia.wizardry.client.render.state.BookshelfRenderState;
-import top.begonia.wizardry.common.entity.block.BookshelfBlockEntity;
+import top.begonia.wizardry.core.entity.block.BookshelfBlockEntity;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -49,7 +49,7 @@ public class BookshelfRender implements BlockEntityRenderer<BookshelfBlockEntity
         state.clean();
         state.blockPos = blockEntity.getBlockPos();
         state.blockState = blockEntity.getBlockState();
-        BookshelfBookSettings settings = WizardryDataManager.getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "bookshelf_book_settings"), BookshelfBookSettings.class).orElse(null);
+        BookshelfBookSettings settings = WizardryClientDataManager.getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "bookshelf_book_settings"), BookshelfBookSettings.class).orElse(null);
         BlockState blockState = blockEntity.getBlockState();
         Direction facing = Direction.NORTH;
         if (blockState.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
@@ -62,7 +62,7 @@ public class BookshelfRender implements BlockEntityRenderer<BookshelfBlockEntity
             ItemStack itemStack = blockEntity.inventory.getStack(i);
             if (!itemStack.isEmpty()) {
                 state.bindTextureInSlot(itemStack, i, settings);
-                OnlyModelQuads onlyModelQuads = WizardryDataManager.getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "books" + i), OnlyModelQuads.class).orElse(null);
+                OnlyModelQuads onlyModelQuads = WizardryClientDataManager.getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "books" + i), OnlyModelQuads.class).orElse(null);
                 state.bindBlockStateModelPartInSlot(onlyModelQuads, i);
             }
         }

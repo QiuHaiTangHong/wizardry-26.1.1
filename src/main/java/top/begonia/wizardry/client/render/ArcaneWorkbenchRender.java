@@ -21,8 +21,8 @@ import org.joml.Matrix4f;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
 import top.begonia.wizardry.client.render.state.ArcaneWorkbenchRenderState;
-import top.begonia.wizardry.common.entity.block.ArcaneWorkbenchBlockEntity;
-import top.begonia.wizardry.common.inventory.menu.ArcaneWorkbenchMenu;
+import top.begonia.wizardry.core.entity.block.ArcaneWorkbenchBlockEntity;
+import top.begonia.wizardry.core.inventory.menu.ArcaneWorkbenchMenu;
 
 import javax.annotation.Nullable;
 

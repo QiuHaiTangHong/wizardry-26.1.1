@@ -4,7 +4,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import top.begonia.wizardry.Wizardry;
-import top.begonia.wizardry.server.data.handbook.HandbookRecipesResult;
+import top.begonia.wizardry.core.data.network.handbook.HandbookRecipesResult;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

@@ -1,6 +1,6 @@
 package top.begonia.wizardry.client.util;
 
-import top.begonia.wizardry.common.spell.AbstractSpell;
+import top.begonia.wizardry.core.spell.AbstractSpell;
 
 import java.util.Comparator;
 

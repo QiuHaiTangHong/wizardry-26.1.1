@@ -12,9 +12,9 @@ import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
 import top.begonia.wizardry.client.config.ClientConfig;
 import top.begonia.wizardry.client.gui.widget.SpellSortButton;
-import top.begonia.wizardry.common.inventory.menu.ArcaneWorkbenchMenu;
+import top.begonia.wizardry.core.inventory.menu.ArcaneWorkbenchMenu;
 import top.begonia.wizardry.client.util.ISpellSortable;
-import top.begonia.wizardry.common.inventory.settings.ArcaneWorkbenchSettings;
+import top.begonia.wizardry.core.inventory.settings.ArcaneWorkbenchSettings;
 
 public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkbenchMenu> {
     private Button applyBtn;

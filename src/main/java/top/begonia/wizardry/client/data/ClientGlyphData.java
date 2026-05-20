@@ -1,8 +1,8 @@
 package top.begonia.wizardry.client.data;
 
 import net.minecraft.resources.Identifier;
-import top.begonia.wizardry.common.registry.WizardrySpells;
-import top.begonia.wizardry.common.spell.AbstractSpell;
+import top.begonia.wizardry.core.registry.WizardrySpells;
+import top.begonia.wizardry.core.spell.AbstractSpell;
 
 import java.util.HashMap;
 import java.util.Map;

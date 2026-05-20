@@ -9,7 +9,7 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import org.jspecify.annotations.NonNull;
-import top.begonia.wizardry.common.registry.WizardrySounds;
+import top.begonia.wizardry.core.registry.WizardrySounds;
 
 public class TurnPageButton extends Button {
 

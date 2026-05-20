@@ -3,7 +3,7 @@ package top.begonia.wizardry.client.data.definition.handbook;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.ExtraCodecs;
-import top.begonia.wizardry.client.data.definition.IData;
+import top.begonia.wizardry.core.api.data.IData;
 import top.begonia.wizardry.client.data.definition.handbook.part.ImageData;
 import top.begonia.wizardry.client.data.definition.handbook.part.RecipeTagData;
 import top.begonia.wizardry.client.data.definition.handbook.part.SectionData;
