@@ -27,7 +27,6 @@ public enum TierEnum implements StringRepresentable {
     public final int upgradeLimit;
     public final int weight;
     private final Style colour;
-
     private final String unlocalisedName;
 
     public static final Codec<TierEnum> CODEC = StringRepresentable.fromEnum(TierEnum::values);

@@ -27,6 +27,7 @@ public class WizardryCommon {
         WizardryMobEffects.register(modEventBus);
         WizardryNetworkPackage.register(modEventBus);
         WizardryParticles.register(modEventBus);
+        WizardryEntities.register(modEventBus);
         modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);

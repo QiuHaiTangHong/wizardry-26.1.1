@@ -18,18 +18,13 @@ import top.begonia.wizardry.client.data.WizardryClientDataManager;
 import top.begonia.wizardry.client.data.definition.handbook.HandbookData;
 import top.begonia.wizardry.client.gui.BookshelfScreen;
 import top.begonia.wizardry.client.network.ClientPayloadHandler;
-import top.begonia.wizardry.client.particle.impl.BlockHighlightParticle;
-import top.begonia.wizardry.client.particle.impl.CloudParticle;
+import top.begonia.wizardry.client.particle.impl.*;
+import top.begonia.wizardry.client.render.*;
 import top.begonia.wizardry.client.util.GenericParticleProvider;
-import top.begonia.wizardry.client.particle.impl.BuffParticle;
-import top.begonia.wizardry.client.render.ArcaneWorkbenchRender;
-import top.begonia.wizardry.client.render.BookshelfRender;
-import top.begonia.wizardry.client.render.WizardryPotionRender;
 import top.begonia.wizardry.client.gui.ArcaneWorkbenchScreen;
 import top.begonia.wizardry.client.model.RobeArmourModel;
 import top.begonia.wizardry.client.model.SageArmourModel;
 import top.begonia.wizardry.client.model.WizardArmourModel;
-import top.begonia.wizardry.client.render.WizardryArmorRenderer;
 import top.begonia.wizardry.core.registry.*;
 import top.begonia.wizardry.core.util.ArmourMaterialHelper;
 import top.begonia.wizardry.core.data.network.handbook.HandbookRecipesRequest;
@@ -54,9 +49,8 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void registerParticleFactories(@NonNull RegisterParticleProvidersEvent event) {
-        event.registerSpriteSet(WizardryParticles.BUFF.get(), spriteSet -> new GenericParticleProvider(spriteSet, BuffParticle::new));
-        event.registerSpriteSet(WizardryParticles.BLOCK_HIGHLIGHT.get(), spriteSet -> new GenericParticleProvider(spriteSet, BlockHighlightParticle::new));
-        event.registerSpriteSet(WizardryParticles.CLOUD.get(), spriteSet -> new GenericParticleProvider(spriteSet, CloudParticle::new));
+        event.registerSpriteSet(WizardryParticles.DUST.get(), spriteSet -> new GenericParticleProvider(spriteSet, DustParticle::new));
+        event.registerSpriteSet(WizardryParticles.FLASH.get(), spriteSet -> new GenericParticleProvider(spriteSet, FlashParticle::new));
     }
 
     @SubscribeEvent
@@ -90,12 +84,16 @@ public class ClientEvents {
                 WizardryBlockEntities.BOOKSHELF.get(),
                 BookshelfRender::new
         );
+        event.registerBlockEntityRenderer(
+                WizardryBlockEntities.IMBUEMENT_ALTAR.get(),
+                ImbuementAltarRender::new
+        );
     }
 
     @SubscribeEvent
     public static void onPlayerLoggedIn(ClientPlayerNetworkEvent.LoggingIn event) {
         ClientPayloadHandler.clearCache();
-        HandbookData handbookData = WizardryClientDataManager.getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "handbook"), HandbookData.class).orElse(null);
+        HandbookData handbookData = WizardryClientDataManager.INSTANCE.getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "handbook"), HandbookData.class).orElse(null);
         if (handbookData != null && Minecraft.getInstance().getConnection() != null) {
             Wizardry.LOGGER.info("正在向服务端发送手册配方同步请求...");
             ClientPacketDistributor.sendToServer(new HandbookRecipesRequest(handbookData.recipes()));

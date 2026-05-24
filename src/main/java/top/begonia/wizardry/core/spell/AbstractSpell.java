@@ -10,9 +10,12 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.RegistryFixedCodec;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.level.Level;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
 import top.begonia.wizardry.core.data.json.definition.spell.SpellProperties;
@@ -20,6 +23,7 @@ import top.begonia.wizardry.core.constants.ElementEnum;
 import top.begonia.wizardry.core.constants.EnabledEnum;
 import top.begonia.wizardry.core.constants.SpellTypeEnum;
 import top.begonia.wizardry.core.constants.TierEnum;
+import top.begonia.wizardry.core.data.json.definition.spell.part.SpellModifiers;
 import top.begonia.wizardry.core.registry.WizardryItems;
 import top.begonia.wizardry.core.registry.WizardrySpells;
 
@@ -73,6 +77,10 @@ public abstract class AbstractSpell implements Comparable<AbstractSpell> {
         } else {
             return properties;
         }
+    }
+
+    public boolean cast(Level level, Player caster, InteractionHand hand, int ticksInUse, SpellModifiers modifiers) {
+        return false;
     }
 
     public final Identifier getIcon() {

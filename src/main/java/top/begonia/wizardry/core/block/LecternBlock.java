@@ -27,7 +27,7 @@ import org.jspecify.annotations.Nullable;
 
 public class LecternBlock extends HorizontalDirectionalBlock implements EntityBlock {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final EnumProperty<WoodTypeEnum> LECTERN_WOOD_TYPE = EnumProperty.create("lectern_wood_type", WoodTypeEnum.class);
+    public static final EnumProperty<WoodTypeEnum> LECTERN_WOOD_TYPE = EnumProperty.create("wood_type", WoodTypeEnum.class);
     protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
     public static final MapCodec<LecternBlock> CODEC = simpleCodec(LecternBlock::new);
 

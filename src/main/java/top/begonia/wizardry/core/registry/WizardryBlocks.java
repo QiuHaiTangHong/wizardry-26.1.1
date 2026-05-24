@@ -1,6 +1,7 @@
 package top.begonia.wizardry.core.registry;
 
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -62,7 +63,13 @@ public final class WizardryBlocks {
     public static final DeferredBlock<CrystalFlowerBlock> CRYSTAL_FLOWER = BLOCKS.registerBlock(
             "crystal_flower",
             CrystalFlowerBlock::new,
-            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.ENCHANTING_TABLE).noOcclusion()
+            () -> BlockBehaviour.Properties
+                    .ofFullCopy(Blocks.ENCHANTING_TABLE)
+                    .noOcclusion()
+                    .instabreak()
+                    .sound(SoundType.BAMBOO_SAPLING)
+                    .lightLevel(_ -> 7)
+                    .randomTicks()
     );
 
     public static final DeferredBlock<TransportationStoneBlock> TRANSPORTATION_STONE = BLOCKS.registerBlock(

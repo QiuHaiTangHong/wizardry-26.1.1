@@ -22,7 +22,7 @@ import java.util.*;
 
 public abstract class AbstractWizardryDataManager extends SimplePreparableReloadListener<Map<Identifier, JsonElement>> {
     protected final Map<Identifier, IDataParser<?>> parserRegistry = new HashMap<>();
-    protected static volatile Map<Class<? extends IData>, Map<Identifier, ? extends IData>> storageSnapshot = Map.of();
+    protected volatile Map<Class<? extends IData>, Map<Identifier, ? extends IData>> storageSnapshot = Map.of();
     protected final static Codec<JsonElement> CODEC = Codec.PASSTHROUGH.xmap(
             dynamic -> dynamic.convert(JsonOps.INSTANCE).getValue(),
             json -> new Dynamic<>(JsonOps.INSTANCE, json)
@@ -55,7 +55,7 @@ public abstract class AbstractWizardryDataManager extends SimplePreparableReload
 
     protected abstract Dist getSupportedDist();
 
-    public static <T extends IData> Optional<T> getData(Identifier id, Class<T> expectedType) {
+    public <T extends IData> Optional<T> getData(Identifier id, Class<T> expectedType) {
         Map<Class<? extends IData>, Map<Identifier, ? extends IData>> currentStorage = storageSnapshot;
         Map<Identifier, ? extends IData> typeMap = currentStorage.get(expectedType);
         if (typeMap != null) {

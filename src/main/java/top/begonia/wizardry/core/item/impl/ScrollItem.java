@@ -25,7 +25,7 @@ public class ScrollItem extends Item implements ISpellCastingItem, IWorkbenchIte
 
     @Override
     public @NonNull AbstractSpell getCurrentSpell(ItemStack stack) {
-        Holder<AbstractSpell> holder = stack.get(WizardryComponents.SPELL_BOOK_KEY);
+        Holder<AbstractSpell> holder = stack.get(WizardryComponents.SPELL);
         return (holder != null) ? holder.value() : WizardrySpells.NONE.get();
     }
 

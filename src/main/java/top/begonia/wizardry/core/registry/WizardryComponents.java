@@ -10,7 +10,9 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import top.begonia.wizardry.Wizardry;
 import top.begonia.wizardry.core.constants.ArtefactTypeEnum;
+import top.begonia.wizardry.core.constants.ElementEnum;
 import top.begonia.wizardry.core.constants.ManaFlaskTypeEnum;
+import top.begonia.wizardry.core.constants.TierEnum;
 import top.begonia.wizardry.core.data.WandUpgrades;
 import top.begonia.wizardry.core.spell.AbstractSpell;
 
@@ -32,22 +34,24 @@ public final class WizardryComponents {
                             .persistent(Codec.INT)
                             .networkSynchronized(ByteBufCodecs.VAR_INT)
             );
+
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<List<Holder<AbstractSpell>>>> SPELL_ARRAY_KEY =
             COMPONENTS.registerComponentType("spells",
                     builder -> builder
                             .persistent(AbstractSpell.CODEC.listOf())
                             .networkSynchronized(AbstractSpell.STREAM_CODEC.apply(ByteBufCodecs.list()))
             );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> SPELL_STATE =
-            COMPONENTS.registerComponentType("spell_state",
-                    builder -> builder.persistent(Codec.STRING)
-                            .networkSynchronized(ByteBufCodecs.STRING_UTF8)
-            );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Holder<AbstractSpell>>> SPELL_BOOK_KEY =
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Holder<AbstractSpell>>> SPELL =
             COMPONENTS.registerComponentType("spell",
                     builder -> builder
                             .persistent(AbstractSpell.CODEC)
                             .networkSynchronized(AbstractSpell.STREAM_CODEC)
+                            .cacheEncoding()
+            );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> SPELL_STATE =
+            COMPONENTS.registerComponentType("spell_state",
+                    builder -> builder.persistent(Codec.STRING)
+                            .networkSynchronized(ByteBufCodecs.STRING_UTF8)
             );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> SELECTED_SPELL_KEY =
             COMPONENTS.registerComponentType("selected_spell",
@@ -55,6 +59,7 @@ public final class WizardryComponents {
                             .persistent(Codec.INT)
                             .networkSynchronized(ByteBufCodecs.VAR_INT)
             );
+
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<List<Integer>>> COOLDOWN_ARRAY_KEY =
             COMPONENTS.registerComponentType("cooldown",
                     builder -> builder
@@ -81,35 +86,24 @@ public final class WizardryComponents {
                             .persistent(Codec.FLOAT)
                             .build()
             );
+    
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> MANA =
             COMPONENTS.register("mana", () -> DataComponentType.<Integer>builder()
                     .persistent(Codec.INT)
                     .networkSynchronized(ByteBufCodecs.VAR_INT)
                     .build()
             );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> CRYSTAL_TYPE =
-            COMPONENTS.registerComponentType("crystal_type",
-                    builder -> builder
-                            .persistent(Codec.STRING)
-                            .networkSynchronized(ByteBufCodecs.STRING_UTF8)
-            );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> CRYSTAL_BLOCK_TYPE =
-            COMPONENTS.registerComponentType("crystal_block_type",
-                    builder -> builder
-                            .persistent(Codec.STRING)
-                            .networkSynchronized(ByteBufCodecs.STRING_UTF8)
-            );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> TIER =
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<TierEnum>> TIER =
             COMPONENTS.registerComponentType("tier",
                     builder -> builder
-                            .persistent(Codec.STRING)
-                            .networkSynchronized(ByteBufCodecs.STRING_UTF8)
+                            .persistent(TierEnum.CODEC)
+                            .networkSynchronized(TierEnum.STREAM_CODEC)
             );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> ELEMENT =
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ElementEnum>> ELEMENT =
             COMPONENTS.registerComponentType("element",
                     builder -> builder
-                            .persistent(Codec.STRING)
-                            .networkSynchronized(ByteBufCodecs.STRING_UTF8)
+                            .persistent(ElementEnum.CODEC)
+                            .networkSynchronized(ElementEnum.STREAM_CODEC)
             );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ManaFlaskTypeEnum>> MANA_FLASK_TYPE =
             COMPONENTS.registerComponentType("mana_flask_type",

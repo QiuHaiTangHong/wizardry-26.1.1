@@ -1,28 +1,43 @@
 package top.begonia.wizardry.core.item.impl;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import org.jspecify.annotations.NonNull;
+import top.begonia.wizardry.Wizardry;
 import top.begonia.wizardry.core.data.json.definition.spell.part.SpellModifiers;
 import top.begonia.wizardry.core.constants.ElementEnum;
 import top.begonia.wizardry.core.constants.TierEnum;
 import top.begonia.wizardry.core.item.IManaStoringItem;
 import top.begonia.wizardry.core.item.ISpellCastingItem;
 import top.begonia.wizardry.core.item.IWorkbenchItem;
+import top.begonia.wizardry.core.registry.WizardryComponents;
 import top.begonia.wizardry.core.spell.AbstractSpell;
 import top.begonia.wizardry.core.util.WandHelper;
 
-public class WandItem extends Item implements IWorkbenchItem, ISpellCastingItem, IManaStoringItem {
-    public TierEnum tier;
-    public ElementEnum element;
+import java.util.function.Consumer;
 
-    public WandItem(TierEnum tier, ElementEnum element, Properties properties) {
+public class WandItem extends Item implements IWorkbenchItem, ISpellCastingItem, IManaStoringItem {
+
+    public WandItem(Properties properties) {
         super(properties);
-        this.tier = tier;
-        this.element = element;
+    }
+
+    @Override
+    public @NonNull Component getName(@NonNull ItemStack itemStack) {
+        TierEnum tier = itemStack.getOrDefault(WizardryComponents.TIER, TierEnum.NOVICE);
+        ElementEnum element = itemStack.getOrDefault(WizardryComponents.ELEMENT, ElementEnum.MAGIC);
+        return Component.translatable("item." + Wizardry.MODID + "." + tier.getSerializedName() + "_" + element.getSerializedName() + "_wand").withStyle(element.getStyle());
+    }
+
+    @Override
+    public void appendHoverText(@NonNull ItemStack itemStack, @NonNull TooltipContext context, @NonNull TooltipDisplay display, @NonNull Consumer<Component> builder, @NonNull TooltipFlag tooltipFlag) {
+
     }
 
     @Override
@@ -119,7 +134,6 @@ public class WandItem extends Item implements IWorkbenchItem, ISpellCastingItem,
         return false;
     }
 
-    // hasEffect
     @Override
     public boolean isFoil(@NonNull ItemStack stack) {
         return false;

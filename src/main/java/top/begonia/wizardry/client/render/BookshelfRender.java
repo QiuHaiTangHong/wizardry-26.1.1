@@ -49,7 +49,7 @@ public class BookshelfRender implements BlockEntityRenderer<BookshelfBlockEntity
         state.clean();
         state.blockPos = blockEntity.getBlockPos();
         state.blockState = blockEntity.getBlockState();
-        BookshelfBookSettings settings = WizardryClientDataManager.getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "bookshelf_book_settings"), BookshelfBookSettings.class).orElse(null);
+        BookshelfBookSettings settings = WizardryClientDataManager.INSTANCE.getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "bookshelf_book_settings"), BookshelfBookSettings.class).orElse(null);
         BlockState blockState = blockEntity.getBlockState();
         Direction facing = Direction.NORTH;
         if (blockState.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
@@ -62,7 +62,7 @@ public class BookshelfRender implements BlockEntityRenderer<BookshelfBlockEntity
             ItemStack itemStack = blockEntity.inventory.getStack(i);
             if (!itemStack.isEmpty()) {
                 state.bindTextureInSlot(itemStack, i, settings);
-                OnlyModelQuads onlyModelQuads = WizardryClientDataManager.getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "books" + i), OnlyModelQuads.class).orElse(null);
+                OnlyModelQuads onlyModelQuads = WizardryClientDataManager.INSTANCE.getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "books" + i), OnlyModelQuads.class).orElse(null);
                 state.bindBlockStateModelPartInSlot(onlyModelQuads, i);
             }
         }

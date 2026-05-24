@@ -5,6 +5,7 @@ import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 import net.neoforged.api.distmarker.Dist;
+import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.core.api.data.AbstractWizardryDataManager;
 
 import java.util.*;
@@ -22,7 +23,7 @@ public class WizardryClientDataManager extends AbstractWizardryDataManager {
     }
 
     @Override
-    protected Identifier cleanseIdentifier(Identifier originalId) {
+    protected Identifier cleanseIdentifier(@NonNull Identifier originalId) {
         String originalPath = originalId.getPath();
         if (originalPath.startsWith(this.langPrefix)) {
             return originalId.withPath(originalPath.substring(this.langPrefix.length()));

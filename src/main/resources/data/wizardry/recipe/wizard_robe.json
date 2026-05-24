@@ -6,11 +6,10 @@
         "yyy"
     ],
     "key": {
-        "y": {
-            "item": "wizardry:magic_silk"
-        }
+        "y": "wizardry:magic_silk"
     },
     "result": {
-        "item": "wizardry:wizard_robe"
+        "id": "wizardry:wizard_robe",
+        "count": 1
     }
 }

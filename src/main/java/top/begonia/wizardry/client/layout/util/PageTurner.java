@@ -24,8 +24,7 @@ public final class PageTurner {
     private final Map<String, SectionData> allSectionData = new LinkedHashMap<>();
 
     public PageTurner() {
-        Identifier path = Identifier.fromNamespaceAndPath(Wizardry.MODID, "handbook");
-        handbookData = WizardryClientDataManager.getData(path, HandbookData.class).orElse(null);
+        handbookData = WizardryClientDataManager.INSTANCE.getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "handbook"), HandbookData.class).orElse(null);
         this.sectionCacheEndIndex = 0;
     }
 

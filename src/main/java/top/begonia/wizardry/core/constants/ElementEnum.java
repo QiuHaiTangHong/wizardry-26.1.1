@@ -1,9 +1,13 @@
 package top.begonia.wizardry.core.constants;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringRepresentable;
 import org.jspecify.annotations.NonNull;
@@ -24,6 +28,12 @@ public enum ElementEnum implements StringRepresentable {
     private final Style colour;
     private final String unlocalisedName;
     private final Identifier icon;
+
+    public static final Codec<ElementEnum> CODEC = StringRepresentable.fromEnum(ElementEnum::values);
+    public static final StreamCodec<RegistryFriendlyByteBuf, ElementEnum> STREAM_CODEC = ByteBufCodecs.idMapper(
+            id -> id >= 0 && id < ElementEnum.values().length ? ElementEnum.values()[id] : ElementEnum.MAGIC,
+            ElementEnum::ordinal
+    ).cast();
 
     ElementEnum(Style colour, String name) {
         this(colour, name, Wizardry.MODID);

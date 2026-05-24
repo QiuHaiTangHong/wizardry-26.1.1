@@ -45,16 +45,7 @@ public final class WizardryItems {
 
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Wizardry.MODID);
 
-    private static @NonNull DeferredHolder<Item, WandItem> registerItemWand(String name, TierEnum tier, ElementEnum element) {
-        DeferredHolder<Item, WandItem> wand = ITEMS.register(name, (identifier) -> {
-            Item.Properties properties = new Item.Properties().setId(ResourceKey.create(Registries.ITEM, identifier)).durability(tier.maxCharge).stacksTo(1);
-            return new WandItem(tier, element, properties);
-        });
-        WizardryCreativeTabs.addToTabs(WizardryCreativeTabs.TabsEnum.GEAR, wand);
-        return wand;
-    }
-
-    public static <T extends Item> DeferredItem<T> registerItem(String name, Function<Item.Properties, T> itemFactory, WizardryCreativeTabs.TabsEnum tab) {
+    public static <T extends Item> @NonNull DeferredItem<T> registerItem(String name, Function<Item.Properties, T> itemFactory, WizardryCreativeTabs.TabsEnum tab) {
         DeferredItem<T> item = ITEMS.register(name, (identifier) -> {
             Item.Properties properties = new Item.Properties().setId(ResourceKey.create(Registries.ITEM, identifier));
             return itemFactory.apply(properties);
@@ -63,7 +54,7 @@ public final class WizardryItems {
         return item;
     }
 
-    private static DeferredItem<WizardArmourItem> registerItem(String name, ArmourMaterialHelper.MaterialBuilder builder, ArmorType type, @Nullable ElementEnum element) {
+    private static @NonNull DeferredItem<WizardArmourItem> registerItem(String name, ArmourMaterialHelper.@NonNull MaterialBuilder builder, @NonNull ArmorType type, @Nullable ElementEnum element) {
         ArmorMaterial material = builder.build(element);
         Item.Properties properties = new Item.Properties().durability(type.getDurability(material.durability())).enchantable(material.enchantmentValue()).attributes(material.createAttributes(type)).component(DataComponents.EQUIPPABLE, Equippable.builder(type.getSlot()).setEquipSound(material.equipSound()).setAsset(material.assetId()).setAllowedEntities(EntityType.PLAYER).build());
         DeferredItem<WizardArmourItem> item = ITEMS.register(name, identifier -> {
@@ -85,53 +76,21 @@ public final class WizardryItems {
         return item;
     }
 
-    // 无元素法杖
-    public static final DeferredHolder<Item, WandItem> MAGIC_WAND = registerItemWand("magic_wand", TierEnum.NOVICE, null);
-    public static final DeferredHolder<Item, WandItem> APPRENTICE_WAND = registerItemWand("apprentice_wand", TierEnum.APPRENTICE, null);
-    public static final DeferredHolder<Item, WandItem> ADVANCED_WAND = registerItemWand("advanced_wand", TierEnum.ADVANCED, null);
-    public static final DeferredHolder<Item, WandItem> MASTER_WAND = registerItemWand("master_wand", TierEnum.MASTER, null);
-
-    // 火系法杖
-    public static final DeferredHolder<Item, WandItem> NOVICE_FIRE_WAND = registerItemWand("novice_fire_wand", TierEnum.NOVICE, ElementEnum.FIRE);
-    public static final DeferredHolder<Item, WandItem> APPRENTICE_FIRE_WAND = registerItemWand("apprentice_fire_wand", TierEnum.APPRENTICE, ElementEnum.FIRE);
-    public static final DeferredHolder<Item, WandItem> ADVANCED_FIRE_WAND = registerItemWand("advanced_fire_wand", TierEnum.ADVANCED, ElementEnum.FIRE);
-    public static final DeferredHolder<Item, WandItem> MASTER_FIRE_WAND = registerItemWand("master_fire_wand", TierEnum.MASTER, ElementEnum.FIRE);
-
-    // 冰系法杖
-    public static final DeferredHolder<Item, WandItem> NOVICE_ICE_WAND = registerItemWand("novice_ice_wand", TierEnum.NOVICE, ElementEnum.ICE);
-    public static final DeferredHolder<Item, WandItem> APPRENTICE_ICE_WAND = registerItemWand("apprentice_ice_wand", TierEnum.APPRENTICE, ElementEnum.ICE);
-    public static final DeferredHolder<Item, WandItem> ADVANCED_ICE_WAND = registerItemWand("advanced_ice_wand", TierEnum.ADVANCED, ElementEnum.ICE);
-    public static final DeferredHolder<Item, WandItem> MASTER_ICE_WAND = registerItemWand("master_ice_wand", TierEnum.MASTER, ElementEnum.ICE);
-
-    // 雷系法杖
-    public static final DeferredHolder<Item, WandItem> NOVICE_LIGHTNING_WAND = registerItemWand("novice_lightning_wand", TierEnum.NOVICE, ElementEnum.LIGHTNING);
-    public static final DeferredHolder<Item, WandItem> APPRENTICE_LIGHTNING_WAND = registerItemWand("apprentice_lightning_wand", TierEnum.APPRENTICE, ElementEnum.LIGHTNING);
-    public static final DeferredHolder<Item, WandItem> ADVANCED_LIGHTNING_WAND = registerItemWand("advanced_lightning_wand", TierEnum.ADVANCED, ElementEnum.LIGHTNING);
-    public static final DeferredHolder<Item, WandItem> MASTER_LIGHTNING_WAND = registerItemWand("master_lightning_wand", TierEnum.MASTER, ElementEnum.LIGHTNING);
-
-    // 亡灵系法杖
-    public static final DeferredHolder<Item, WandItem> NOVICE_NECROMANCY_WAND = registerItemWand("novice_necromancy_wand", TierEnum.NOVICE, ElementEnum.NECROMANCY);
-    public static final DeferredHolder<Item, WandItem> APPRENTICE_NECROMANCY_WAND = registerItemWand("apprentice_necromancy_wand", TierEnum.APPRENTICE, ElementEnum.NECROMANCY);
-    public static final DeferredHolder<Item, WandItem> ADVANCED_NECROMANCY_WAND = registerItemWand("advanced_necromancy_wand", TierEnum.ADVANCED, ElementEnum.NECROMANCY);
-    public static final DeferredHolder<Item, WandItem> MASTER_NECROMANCY_WAND = registerItemWand("master_necromancy_wand", TierEnum.MASTER, ElementEnum.NECROMANCY);
-
-    // 土系法杖
-    public static final DeferredHolder<Item, WandItem> NOVICE_EARTH_WAND = registerItemWand("novice_earth_wand", TierEnum.NOVICE, ElementEnum.EARTH);
-    public static final DeferredHolder<Item, WandItem> APPRENTICE_EARTH_WAND = registerItemWand("apprentice_earth_wand", TierEnum.APPRENTICE, ElementEnum.EARTH);
-    public static final DeferredHolder<Item, WandItem> ADVANCED_EARTH_WAND = registerItemWand("advanced_earth_wand", TierEnum.ADVANCED, ElementEnum.EARTH);
-    public static final DeferredHolder<Item, WandItem> MASTER_EARTH_WAND = registerItemWand("master_earth_wand", TierEnum.MASTER, ElementEnum.EARTH);
-
-    // 术法系法杖
-    public static final DeferredHolder<Item, WandItem> NOVICE_SORCERY_WAND = registerItemWand("novice_sorcery_wand", TierEnum.NOVICE, ElementEnum.SORCERY);
-    public static final DeferredHolder<Item, WandItem> APPRENTICE_SORCERY_WAND = registerItemWand("apprentice_sorcery_wand", TierEnum.APPRENTICE, ElementEnum.SORCERY);
-    public static final DeferredHolder<Item, WandItem> ADVANCED_SORCERY_WAND = registerItemWand("advanced_sorcery_wand", TierEnum.ADVANCED, ElementEnum.SORCERY);
-    public static final DeferredHolder<Item, WandItem> MASTER_SORCERY_WAND = registerItemWand("master_sorcery_wand", TierEnum.MASTER, ElementEnum.SORCERY);
-
-    // 治疗系法杖
-    public static final DeferredHolder<Item, WandItem> NOVICE_HEALING_WAND = registerItemWand("novice_healing_wand", TierEnum.NOVICE, ElementEnum.HEALING);
-    public static final DeferredHolder<Item, WandItem> APPRENTICE_HEALING_WAND = registerItemWand("apprentice_healing_wand", TierEnum.APPRENTICE, ElementEnum.HEALING);
-    public static final DeferredHolder<Item, WandItem> ADVANCED_HEALING_WAND = registerItemWand("advanced_healing_wand", TierEnum.ADVANCED, ElementEnum.HEALING);
-    public static final DeferredHolder<Item, WandItem> MASTER_HEALING_WAND = registerItemWand("master_healing_wand", TierEnum.MASTER, ElementEnum.HEALING);
+    public static final DeferredHolder<Item, WandItem> WAND = registerItemWithSubItems(
+            "wand",
+            properties -> new WandItem(properties.stacksTo(1)),
+            WizardryCreativeTabs.TabsEnum.GEAR,
+            (buildCreativeModeTabContentsEvent, item) -> {
+                for (ElementEnum element : ElementEnum.values()) {
+                    for (TierEnum tier : TierEnum.values()) {
+                        ItemStack stack = new ItemStack(item);
+                        stack.set(WizardryComponents.TIER, tier);
+                        stack.set(WizardryComponents.ELEMENT, element);
+                        buildCreativeModeTabContentsEvent.accept(stack);
+                    }
+                }
+            }
+    );
 
     //法术书
     public static final DeferredHolder<Item, SpellBookItem> SPELL_BOOK = registerItemWithSubItems(
@@ -149,7 +108,7 @@ public final class WizardryItems {
                         AbstractSpell spell = spellHolder.value();
                         if (spell.applicableForItem(item)) {
                             ItemStack spellBook = new ItemStack(item);
-                            spellBook.set(WizardryComponents.SPELL_BOOK_KEY.get(), spellHolder);
+                            spellBook.set(WizardryComponents.SPELL.get(), spellHolder);
                             buildCreativeModeTabContentsEvent.accept(spellBook);
                         }
                     }
@@ -173,7 +132,7 @@ public final class WizardryItems {
                         AbstractSpell spell = spellHolder.value();
                         if (spell.applicableForItem(item)) {
                             ItemStack scroll = new ItemStack(item);
-                            scroll.set(WizardryComponents.SPELL_BOOK_KEY.get(), spellHolder);
+                            scroll.set(WizardryComponents.SPELL.get(), spellHolder);
                             buildCreativeModeTabContentsEvent.accept(scroll);
                         }
                     }
@@ -761,7 +720,10 @@ public final class WizardryItems {
     );
     public static final DeferredItem<BlockItem> CRYSTAL_FLOWER = registerItem(
             "crystal_flower",
-            properties -> new BlockItem(WizardryBlocks.CRYSTAL_FLOWER.get(), properties.useBlockDescriptionPrefix()),
+            properties -> new BlockItem(
+                    WizardryBlocks.CRYSTAL_FLOWER.get(),
+                    properties.useBlockDescriptionPrefix()
+            ),
             WizardryCreativeTabs.TabsEnum.WIZARDRY
     );
     public static final DeferredItem<BlockItem> TRANSPORTATION_STONE = registerItem(
@@ -771,14 +733,24 @@ public final class WizardryItems {
     );
     public static final DeferredItem<BlockItem> CRYSTAL_BLOCK = registerItemWithSubItems(
             "crystal_block",
-            properties -> new BlockItem(WizardryBlocks.CRYSTAL_BLOCK.get(), properties.useBlockDescriptionPrefix()),
+            properties -> new BlockItem(WizardryBlocks.CRYSTAL_BLOCK.get(), properties.useBlockDescriptionPrefix()) {
+                @Override
+                public @NonNull Component getName(@NonNull ItemStack itemStack) {
+                    ElementEnum element = ElementEnum.MAGIC;
+                    BlockItemStateProperties stateProperties = itemStack.get(DataComponents.BLOCK_STATE);
+                    if (stateProperties != null) {
+                        ElementEnum foundElement = stateProperties.get(CrystalBlock.ELEMENT);
+                        if (foundElement != null) {
+                            element = foundElement;
+                        }
+                    }
+                    return Component.translatable("block." + Wizardry.MODID + "." + element.getSerializedName() + "_crystal_block");
+                }
+            },
             WizardryCreativeTabs.TabsEnum.WIZARDRY,
             (buildCreativeModeTabContentsEvent, item) -> {
                 for (ElementEnum element : ElementEnum.values()) {
                     ItemStack stack = new ItemStack(item);
-                    Component name = Component.translatable("block." + Wizardry.MODID + "." + element.getSerializedName() + "_crystal_block")
-                            .withStyle(style -> style.withItalic(false));
-                    stack.set(DataComponents.ITEM_NAME, name);
                     stack.set(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY
                             .with(CrystalBlock.ELEMENT, element));
                     buildCreativeModeTabContentsEvent.accept(stack);
@@ -795,8 +767,7 @@ public final class WizardryItems {
                         continue;
                     }
                     ItemStack stack = new ItemStack(item);
-                    stack.set(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY
-                            .with(CrystalBlock.ELEMENT, element));
+                    stack.set(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY.with(CrystalBlock.ELEMENT, element));
                     buildCreativeModeTabContentsEvent.accept(stack);
                 }
             }
@@ -819,45 +790,75 @@ public final class WizardryItems {
     );
     public static final DeferredItem<BlockItem> GILDED_WOOD = registerItemWithSubItems(
             "gilded_wood",
-            props -> new BlockItem(WizardryBlocks.GILDED_WOOD.get(), props.useBlockDescriptionPrefix()),
+            props -> new BlockItem(WizardryBlocks.GILDED_WOOD.get(), props.useBlockDescriptionPrefix()) {
+                @Override
+                public @NonNull Component getName(@NonNull ItemStack itemStack) {
+                    BlockItemStateProperties stateProperties = itemStack.get(DataComponents.BLOCK_STATE);
+                    String woodName = "";
+                    if (stateProperties != null) {
+                        WoodTypeEnum woodType = stateProperties.get(GildedWoodBlock.GILDED_WOOD_TYPE);
+                        if (woodType != null) {
+                            woodName = woodType.getSerializedName();
+                        }
+                    }
+                    return Component.translatable("block." + Wizardry.MODID + "." + woodName + "_gilded_wood");
+                }
+            },
             WizardryCreativeTabs.TabsEnum.WIZARDRY,
             (buildCreativeModeTabContentsEvent, item) -> {
                 for (WoodTypeEnum wood : WoodTypeEnum.values()) {
                     ItemStack stack = new ItemStack(item);
                     stack.set(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY.with(GildedWoodBlock.GILDED_WOOD_TYPE, wood));
-                    Component name = Component.translatable("block." + Wizardry.MODID + "." + wood.getSerializedName() + "_gilded_wood")
-                            .withStyle(style -> style.withItalic(false));
-                    stack.set(DataComponents.ITEM_NAME, name);
                     buildCreativeModeTabContentsEvent.accept(stack);
                 }
             }
     );
     public static final DeferredItem<BlockItem> BOOKSHELF = registerItemWithSubItems(
             "bookshelf",
-            props -> new BlockItem(WizardryBlocks.BOOKSHELF.get(), props.useBlockDescriptionPrefix()),
+            props -> new BlockItem(WizardryBlocks.BOOKSHELF.get(), props.useBlockDescriptionPrefix()) {
+                @Override
+                public @NonNull Component getName(@NonNull ItemStack itemStack) {
+                    BlockItemStateProperties stateProperties = itemStack.get(DataComponents.BLOCK_STATE);
+                    String woodName = "";
+                    if (stateProperties != null) {
+                        WoodTypeEnum woodType = stateProperties.get(BookshelfBlock.BOOKSHELF_WOOD_TYPE);
+                        if (woodType != null) {
+                            woodName = woodType.getSerializedName();
+                        }
+                    }
+                    return Component.translatable("block." + Wizardry.MODID + "." + woodName + "_bookshelf");
+                }
+            },
             WizardryCreativeTabs.TabsEnum.WIZARDRY,
             (buildCreativeModeTabContentsEvent, item) -> {
                 for (WoodTypeEnum wood : WoodTypeEnum.values()) {
                     ItemStack stack = new ItemStack(item);
                     stack.set(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY.with(BookshelfBlock.BOOKSHELF_WOOD_TYPE, wood));
-                    Component name = Component.translatable("block." + Wizardry.MODID + "." + wood.getSerializedName() + "_bookshelf")
-                            .withStyle(style -> style.withItalic(false));
-                    stack.set(DataComponents.ITEM_NAME, name);
                     buildCreativeModeTabContentsEvent.accept(stack);
                 }
             }
     );
     public static final DeferredItem<BlockItem> LECTERN = registerItemWithSubItems(
             "lectern",
-            props -> new BlockItem(WizardryBlocks.LECTERN.get(), props.useBlockDescriptionPrefix()),
+            props -> new BlockItem(WizardryBlocks.LECTERN.get(), props.useBlockDescriptionPrefix()) {
+                @Override
+                public @NonNull Component getName(@NonNull ItemStack itemStack) {
+                    BlockItemStateProperties stateProperties = itemStack.get(DataComponents.BLOCK_STATE);
+                    String woodName = "";
+                    if (stateProperties != null) {
+                        WoodTypeEnum woodType = stateProperties.get(LecternBlock.LECTERN_WOOD_TYPE);
+                        if (woodType != null) {
+                            woodName = woodType.getSerializedName();
+                        }
+                    }
+                    return Component.translatable("block." + Wizardry.MODID + "." + woodName + "_lectern");
+                }
+            },
             WizardryCreativeTabs.TabsEnum.WIZARDRY,
             (buildCreativeModeTabContentsEvent, item) -> {
                 for (WoodTypeEnum wood : WoodTypeEnum.values()) {
                     ItemStack stack = new ItemStack(item);
                     stack.set(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY.with(LecternBlock.LECTERN_WOOD_TYPE, wood));
-                    Component name = Component.translatable("block." + Wizardry.MODID + "." + wood.getSerializedName() + "_lectern")
-                            .withStyle(style -> style.withItalic(false));
-                    stack.set(DataComponents.ITEM_NAME, name);
                     buildCreativeModeTabContentsEvent.accept(stack);
                 }
             }
@@ -874,12 +875,12 @@ public final class WizardryItems {
     );
     public static final DeferredItem<MagicCrystalItem> MAGIC_CRYSTAL = registerItemWithSubItems(
             "magic_crystal",
-            properties -> new MagicCrystalItem(properties.stacksTo(1)),
+            MagicCrystalItem::new,
             WizardryCreativeTabs.TabsEnum.WIZARDRY,
             (buildCreativeModeTabContentsEvent, item) -> {
                 for (ElementEnum element : ElementEnum.values()) {
                     ItemStack crystalStack = new ItemStack(item);
-                    crystalStack.set(WizardryComponents.CRYSTAL_TYPE.get(), element.getSerializedName());
+                    crystalStack.set(WizardryComponents.ELEMENT.get(), element);
                     buildCreativeModeTabContentsEvent.accept(crystalStack);
                 }
             }
@@ -909,7 +910,7 @@ public final class WizardryItems {
                         continue;
                     }
                     ItemStack arcaneTomeStack = new ItemStack(item);
-                    arcaneTomeStack.set(WizardryComponents.TIER.get(), tier.getSerializedName());
+                    arcaneTomeStack.set(WizardryComponents.TIER.get(), tier);
                     buildCreativeModeTabContentsEvent.accept(arcaneTomeStack);
                 }
             }
@@ -1036,7 +1037,7 @@ public final class WizardryItems {
             SparkBombItem::new,
             WizardryCreativeTabs.TabsEnum.WIZARDRY
     );
-    public static final DeferredItem<SpectralDustItem> spectral_dust = registerItemWithSubItems(
+    public static final DeferredItem<SpectralDustItem> SPECTRAL_DUST = registerItemWithSubItems(
             "spectral_dust",
             SpectralDustItem::new,
             WizardryCreativeTabs.TabsEnum.WIZARDRY,
@@ -1046,7 +1047,7 @@ public final class WizardryItems {
                         continue;
                     }
                     ItemStack stack = new ItemStack(item);
-                    stack.set(WizardryComponents.ELEMENT.get(), element.getSerializedName());
+                    stack.set(WizardryComponents.ELEMENT.get(), element);
                     buildCreativeModeTabContentsEvent.accept(stack);
                 }
             }

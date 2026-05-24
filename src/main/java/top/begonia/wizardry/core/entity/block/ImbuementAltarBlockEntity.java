@@ -44,7 +44,6 @@ public class ImbuementAltarBlockEntity extends BlockEntity {
 
     public void setStack(ItemStack stack) {
         this.stack = stack;
-        checkRecipe();
     }
 
     public void setLastUser(@Nullable Player player) {
@@ -52,7 +51,6 @@ public class ImbuementAltarBlockEntity extends BlockEntity {
     }
 
     public void checkRecipe() {
-
         if (getResult().isEmpty()) {
             imbuementTimer = 0;
         } else if (imbuementTimer == 0) {

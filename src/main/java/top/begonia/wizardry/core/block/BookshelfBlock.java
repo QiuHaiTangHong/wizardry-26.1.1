@@ -24,7 +24,7 @@ import top.begonia.wizardry.core.registry.WizardryBlockEntities;
 public class BookshelfBlock extends BaseEntityBlock {
     public static final MapCodec<BookshelfBlock> CODEC = simpleCodec(BookshelfBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
-    public static final EnumProperty<WoodTypeEnum> BOOKSHELF_WOOD_TYPE = EnumProperty.create("bookshelf_wood_type", WoodTypeEnum.class);
+    public static final EnumProperty<WoodTypeEnum> BOOKSHELF_WOOD_TYPE = EnumProperty.create("wood_type", WoodTypeEnum.class);
 
     public BookshelfBlock(Properties properties) {
         super(properties);

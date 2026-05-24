@@ -6,7 +6,6 @@ import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.state.level.QuadParticleRenderState;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -16,12 +15,10 @@ import top.begonia.wizardry.core.entity.ICustomHitbox;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Random;
 
 public abstract class AbstractParticle extends SingleQuadParticle {
     protected final SpriteSet sprites;
     protected long seed;
-    protected Random random = new Random();
     protected boolean shaded = false;
     protected float initialRed;
     protected float initialGreen;
@@ -41,21 +38,53 @@ public abstract class AbstractParticle extends SingleQuadParticle {
     private static final double SPREAD_FACTOR = 0.2;
     private static final double IMPACT_FRICTION = 0.2;
     private double prevVelX, prevVelY, prevVelZ;
-    private final RandomSource randomSource;
 
-    public AbstractParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprites, RandomSource randomSource) {
-        super(level, x, y, z, xSpeed, ySpeed, zSpeed, sprites.get(0, 1));
+    public AbstractParticle(
+            @NonNull WizardryParticleOptions options,
+            ClientLevel level,
+            double x, double y, double z,
+            double xd, double yd, double zd,
+            @NonNull SpriteSet sprites
+    ) {
+        super(level, x, y, z, xd, yd, zd, sprites.get(0, 1));
         this.sprites = sprites;
         this.relativeX = x;
         this.relativeY = y;
         this.relativeZ = z;
-        this.randomSource = randomSource;
         this.setSpriteFromAge(sprites);
+        this.setParticleSpeed(xd, yd, zd);
+
+        if (options.fr >= 0 && options.fg >= 0 && options.fb >= 0) {
+            this.setFadeColour(options.fr, options.fg, options.fb);
+        } else {
+            this.setFadeColour(this.initialRed, this.initialGreen, this.initialBlue);
+        }
+        if (options.radius > 0) {
+            this.setSpin(options.radius, options.rpt);
+        }
+        if (!Float.isNaN(options.yaw) && !Float.isNaN(options.pitch)) {
+            this.setFacing(options.yaw, options.pitch);
+        }
+        if (!Double.isNaN(options.tvx) && !Double.isNaN(options.tvy) && !Double.isNaN(options.tvz)) {
+            this.setTargetVelocity(options.tvx, options.tvy, options.tvz);
+        }
+
+        this.setInitialColor(options.r, options.g, options.b);
+        this.setColor(options.r, options.g, options.b);
+        this.setSeed(options.seed);
+        this.setLength(options.length);
+        this.setLifetime(options.lifetime);
+        this.scale(options.scale);
+        this.setGravity(options.gravity);
+        this.setShaded(options.shaded);
+        this.setCollisions(options.collide);
+        this.setEntity(options.entity);
+        this.setTargetPosition(options.tx, options.ty, options.tz);
+        this.setTargetEntity(options.target);
     }
 
     public void setSeed(long seed) {
         this.seed = seed;
-        this.random = new Random(seed);
     }
 
     public void setShaded(boolean shaded) {
@@ -68,12 +97,6 @@ public abstract class AbstractParticle extends SingleQuadParticle {
 
     public void setCollisions(boolean canCollide) {
         this.hasPhysics = canCollide;
-    }
-
-    public void setVelocity(double vx, double vy, double vz) {
-        this.xd = vx;
-        this.yd = vy;
-        this.zd = vz;
     }
 
     public void setSpin(double radius, double speed) {
@@ -102,11 +125,10 @@ public abstract class AbstractParticle extends SingleQuadParticle {
         }
     }
 
-    public void setRBGColorF(float r, float g, float b) {
-        initialRed = r;
-        initialGreen = g;
-        initialBlue = b;
-        setFadeColour(r, g, b);
+    public void setInitialColor(float r, float g, float b) {
+        this.initialRed = r;
+        this.initialGreen = g;
+        this.initialBlue = b;
     }
 
     public void setFadeColour(float r, float g, float b) {
@@ -152,7 +174,6 @@ public abstract class AbstractParticle extends SingleQuadParticle {
                 this.remove();
                 return;
             }
-            // 完美套用你写对的 1.21.4 现代新字段名！
             this.xo = this.x + this.entity.xOld - this.entity.getX() - this.relativeMotionX * (1.0F - partialTicks);
             this.yo = this.y + this.entity.yOld - this.entity.getY() - this.relativeMotionY * (1.0F - partialTicks);
             this.zo = this.z + this.entity.zOld - this.entity.getZ() - this.relativeMotionZ * (1.0F - partialTicks);
@@ -216,7 +237,7 @@ public abstract class AbstractParticle extends SingleQuadParticle {
             if (this.xd == 0 && this.prevVelX != 0) {
                 this.yd *= IMPACT_FRICTION;
                 this.zd *= IMPACT_FRICTION;
-                this.yd += (this.random.nextDouble() * 2 - 1) * this.prevVelX * SPREAD_FACTOR; // rand -> random
+                this.yd += (this.random.nextDouble() * 2 - 1) * this.prevVelX * SPREAD_FACTOR;
                 this.zd += (this.random.nextDouble() * 2 - 1) * this.prevVelX * SPREAD_FACTOR;
             }
 
@@ -235,7 +256,7 @@ public abstract class AbstractParticle extends SingleQuadParticle {
             }
             double searchRadius = 20.0D;
             AABB searchBox = new AABB(this.x, this.y, this.z, this.x, this.y, this.z).inflate(searchRadius);
-            List<Entity> nearbyEntities = this.level.getEntities((Entity) null, searchBox);
+            List<Entity> nearbyEntities = this.level.getEntities(null, searchBox);
             Vec3 currentPos = new Vec3(this.x, this.y, this.z);
             Vec3 previousPos = new Vec3(this.xo, this.yo, this.zo);
             for (Entity e : nearbyEntities) {

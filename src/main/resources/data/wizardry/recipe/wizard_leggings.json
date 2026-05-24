@@ -6,11 +6,10 @@
         "y y"
     ],
     "key": {
-        "y": {
-            "item": "ebwizardry:magic_silk"
-        }
+        "y": "wizardry:magic_silk"
     },
     "result": {
-        "item": "ebwizardry:wizard_leggings"
+        "id": "wizardry:wizard_leggings",
+        "count": 1
     }
 }
