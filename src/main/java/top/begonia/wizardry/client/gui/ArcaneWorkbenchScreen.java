@@ -57,8 +57,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
                 this.menu,
                 this,
                 button -> {
-                },
-                null
+                }
         ));
         this.addRenderableWidget(sortButtons[1] = new SpellSortButton(
                 this.leftPos - 31, this.topPos + 8,
@@ -66,8 +65,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
                 this.menu,
                 this,
                 button -> {
-                },
-                null
+                }
         ));
         this.addRenderableWidget(sortButtons[2] = new SpellSortButton(
                 this.leftPos - 18, this.topPos + 8,
@@ -75,8 +73,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
                 this.menu,
                 this,
                 button -> {
-                },
-                null
+                }
         ));
 
         this.searchField = new EditBox(

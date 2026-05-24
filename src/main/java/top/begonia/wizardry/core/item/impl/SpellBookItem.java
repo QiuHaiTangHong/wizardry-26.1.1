@@ -53,7 +53,7 @@ public class SpellBookItem extends Item {
             @NonNull Consumer<Component> builder,
             @NonNull TooltipFlag tooltipFlag
     ) {
-        Holder<AbstractSpell> spellHolder = itemStack.get(WizardryComponents.SPELL_BOOK_KEY.get());
+        Holder<AbstractSpell> spellHolder = itemStack.get(WizardryComponents.SPELL.get());
         if (spellHolder == null) return;
         AbstractSpell spell = spellHolder.value();
         Level level = context.level();

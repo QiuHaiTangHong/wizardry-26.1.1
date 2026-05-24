@@ -6,8 +6,9 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import org.jspecify.annotations.NonNull;
+import top.begonia.wizardry.core.registry.WizardryItems;
 
-public class SageArmourModel<T extends HumanoidRenderState> extends HumanoidModel<T> implements IWizardryArmour {
+public class SageArmourModel<T extends HumanoidRenderState> extends HumanoidModel<T> {
     public ModelPart robe;
     public ModelPart collar;
 
@@ -74,8 +75,34 @@ public class SageArmourModel<T extends HumanoidRenderState> extends HumanoidMode
     @Override
     public void setupAnim(@NonNull T state) {
         super.setupAnim(state);
-        this.robe.visible = this.body.visible;
-        this.collar.visible = this.body.visible;
+        this.head.visible = false;
+        this.hat.visible = false;
+        this.body.visible = false;
+        this.rightArm.visible = false;
+        this.leftArm.visible = false;
+        this.rightLeg.visible = false;
+        this.leftLeg.visible = false;
+        this.robe.visible = false;
+        this.collar.visible = false;
+        if (state.headEquipment.is(WizardryItems.ARMOUR.get())) {
+            this.head.visible = true;
+            this.hat.visible = true;
+        }
+        if (state.chestEquipment.is(WizardryItems.ARMOUR.get())) {
+            this.body.visible = true;
+            this.rightArm.visible = true;
+            this.leftArm.visible = true;
+            this.robe.visible = true;
+            this.collar.visible = true;
+        }
+        if (state.legsEquipment.is(WizardryItems.ARMOUR.get())) {
+            this.rightLeg.visible = true;
+            this.leftLeg.visible = true;
+        }
+        if (state.feetEquipment.is(WizardryItems.ARMOUR.get())) {
+            this.rightLeg.visible = true;
+            this.leftLeg.visible = true;
+        }
         if (state.isCrouching) {
             this.robe.z = 4.0F;
         } else {

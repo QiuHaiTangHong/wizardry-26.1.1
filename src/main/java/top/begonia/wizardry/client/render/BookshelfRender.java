@@ -24,7 +24,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3fc;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
-import top.begonia.wizardry.client.data.WizardryClientDataManager;
+import top.begonia.wizardry.client.data.manager.WizardryClientDataManager;
 import top.begonia.wizardry.client.data.definition.bookshelf.BookshelfBookSettings;
 import top.begonia.wizardry.client.data.definition.model.OnlyModelQuads;
 import top.begonia.wizardry.client.render.state.BookshelfRenderState;
@@ -49,7 +49,7 @@ public class BookshelfRender implements BlockEntityRenderer<BookshelfBlockEntity
         state.clean();
         state.blockPos = blockEntity.getBlockPos();
         state.blockState = blockEntity.getBlockState();
-        BookshelfBookSettings settings = WizardryClientDataManager.getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "bookshelf_book_settings"), BookshelfBookSettings.class).orElse(null);
+        BookshelfBookSettings settings = WizardryClientDataManager.getInstance().getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "bookshelf_book_settings"), BookshelfBookSettings.class).orElse(null);
         BlockState blockState = blockEntity.getBlockState();
         Direction facing = Direction.NORTH;
         if (blockState.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
@@ -59,10 +59,10 @@ public class BookshelfRender implements BlockEntityRenderer<BookshelfBlockEntity
         }
         state.facing = facing;
         for (int i = 0; i < state.displayTextures.size(); i++) {
-            ItemStack itemStack = blockEntity.inventory.getStack(i);
+            ItemStack itemStack = blockEntity.getInventory().getStack(i);
             if (!itemStack.isEmpty()) {
                 state.bindTextureInSlot(itemStack, i, settings);
-                OnlyModelQuads onlyModelQuads = WizardryClientDataManager.getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "books" + i), OnlyModelQuads.class).orElse(null);
+                OnlyModelQuads onlyModelQuads = WizardryClientDataManager.getInstance().getData(Identifier.fromNamespaceAndPath(Wizardry.MODID, "books" + i), OnlyModelQuads.class).orElse(null);
                 state.bindBlockStateModelPartInSlot(onlyModelQuads, i);
             }
         }
