@@ -11,9 +11,11 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -22,8 +24,9 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.NonNull;
+import top.begonia.wizardry.core.util.AllyDesignationSystem;
 
-public abstract class MagicProjectileEntity extends Projectile {
+public abstract class MagicProjectileEntity extends ThrowableItemProjectile {
 
     public static final double LAUNCH_Y_OFFSET = 0.1;
     public static final int SEEKING_TIME = 15;
@@ -31,17 +34,28 @@ public abstract class MagicProjectileEntity extends Projectile {
     protected static final EntityDataAccessor<Float> DAMAGE_MULTIPLIER_ACCESSOR =
             SynchedEntityData.defineId(MagicProjectileEntity.class, EntityDataSerializers.FLOAT);
 
+    // 注册表使用
     public MagicProjectileEntity(EntityType<? extends MagicProjectileEntity> type, Level level) {
         super(type, level);
     }
 
-    public void aim(LivingEntity caster, float speed) {
+    //玩家使用
+    public MagicProjectileEntity(EntityType<? extends MagicProjectileEntity> type, LivingEntity owner, Level level, ItemStack itemStack) {
+        super(type, owner, level, itemStack);
+    }
+
+    //发射器使用
+    public MagicProjectileEntity(EntityType<? extends MagicProjectileEntity> type, double x, double y, double z, Level level, ItemStack itemStack) {
+        super(type, x, y, z, level, itemStack);
+    }
+
+    public void aim(@NonNull LivingEntity caster, float speed) {
         this.setPos(caster.getX(), caster.getEyeY() - LAUNCH_Y_OFFSET, caster.getZ());
         this.setOwner(caster);
         this.shootFromRotation(caster, caster.getXRot(), caster.getYRot(), 0.0F, speed, 1.0F);
     }
 
-    public void aim(LivingEntity caster, Entity target, float speed, float aimingError) {
+    public void aim(LivingEntity caster, @NonNull Entity target, float speed, float aimingError) {
         this.setOwner(caster);
         double startY = caster.getEyeY() - LAUNCH_Y_OFFSET;
         double dx = target.getX() - caster.getX();
@@ -65,7 +79,9 @@ public abstract class MagicProjectileEntity extends Projectile {
 
     public float getSeekingStrength() {
         if (this.getOwner() instanceof Player player) {
-            return 2.0F;
+            // TODO: 在这里通过高版本的组件或装备栏检测玩家是否佩戴了索敌之戒 ring_seeking
+            // 示例：if (ArtifactUtil.hasArtifact(player, WizardryItems.RING_SEEKING)) return 2.0F;
+            return 0.0F;
         }
         return 0.0F;
     }
@@ -78,7 +94,6 @@ public abstract class MagicProjectileEntity extends Projectile {
             return;
         }
 
-        // 魔法追踪向（Seeking）算法的现代重构
         if (this.getSeekingStrength() > 0.0F) {
             Vec3 velocity = this.getDeltaMovement();
             Vec3 startPos = this.position();
@@ -90,30 +105,28 @@ public abstract class MagicProjectileEntity extends Projectile {
                     startPos,
                     endPos,
                     boundingBox,
-                    entity -> entity instanceof LivingEntity && !entity.isSpectator() && entity.isAlive()
+                    entity -> entity instanceof LivingEntity && !entity.isSpectator() && entity.isAlive() && entity != this.getOwner()
             );
 
             if (hit != null) {
                 Entity target = hit.getEntity();
-//                if (AllyDesignationSystem.isValidTarget(this.getOwner(), target)) {
-//                    Vec3 targetCenter = new Vec3(target.getX(), target.getY() + (double)(target.getBbHeight() / 2.0F), target.getZ());
-//                    Vec3 targetDirection = targetCenter.subtract(startPos).normalize().scale(velocity.length());
-//                    double motionX = velocity.x + 2.0D * (targetDirection.x - velocity.x) / SEEKING_TIME;
-//                    double motionY = velocity.y + 2.0D * (targetDirection.y - velocity.y) / SEEKING_TIME;
-//                    double motionZ = velocity.z + 2.0D * (targetDirection.z - velocity.z) / SEEKING_TIME;
-//
-//                    this.setDeltaMovement(motionX, motionY, motionZ);
-//                }
+                if (AllyDesignationSystem.isValidTarget(this.getOwner(), target)) {
+                    Vec3 targetCenter = new Vec3(target.getX(), target.getY() + (double) (target.getBbHeight() / 2.0F), target.getZ());
+                    Vec3 targetDirection = targetCenter.subtract(startPos).normalize().scale(velocity.length());
+                    double motionX = velocity.x + 2.0D * (targetDirection.x - velocity.x) / SEEKING_TIME;
+                    double motionY = velocity.y + 2.0D * (targetDirection.y - velocity.y) / SEEKING_TIME;
+                    double motionZ = velocity.z + 2.0D * (targetDirection.z - velocity.z) / SEEKING_TIME;
+                    this.setDeltaMovement(motionX, motionY, motionZ);
+                }
             }
         }
 
         HitResult hitResult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
-//        if (hitResult.getType() != HitResult.Type.MISS) {
-//            this.hitTargetOrDeflect(hitResult);
-//        }
-
+        if (hitResult.getType() != HitResult.Type.MISS) {
+            this.onHit(hitResult);
+        }
         this.applyGravity();
-        this.move(net.minecraft.world.entity.MoverType.SELF, this.getDeltaMovement());
+        this.move(MoverType.SELF, this.getDeltaMovement());
     }
 
     @Override
@@ -130,6 +143,7 @@ public abstract class MagicProjectileEntity extends Projectile {
 
     @Override
     protected void defineSynchedData(SynchedEntityData.@NonNull Builder builder) {
+        super.defineSynchedData(builder);
         builder.define(DAMAGE_MULTIPLIER_ACCESSOR, 1.0f);
     }
 

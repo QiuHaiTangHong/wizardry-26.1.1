@@ -1,0 +1,15 @@
+{
+  "pools": [
+    {
+      "name": "wizardry",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "value": "wizardry:ruined_spell_book",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

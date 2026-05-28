@@ -36,9 +36,6 @@
 //
 //    private final Ingredient centerIngredient;
 //    private final List<String> requiredElements;
-//    /**
-//     * 合成结果物品
-//     */
 //    private final ItemStack result;
 //
 //    public WizardryRecipe(Ingredient centerIngredient, List<String> requiredElements, ItemStack result) {

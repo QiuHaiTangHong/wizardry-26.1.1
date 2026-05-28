@@ -29,7 +29,7 @@ public final class WizardryEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<FireBombEntity>> FIRE_BOMB = register(
             "fire_bomb",
             EntityType.Builder
-                    .of(FireBombEntity::new, MobCategory.MISC)
+                    .<FireBombEntity>of(FireBombEntity::new, MobCategory.MISC)
                     .sized(0.25F, 0.25F)
                     .clientTrackingRange(4)
                     .updateInterval(10)

@@ -6,6 +6,9 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ItemSupplier;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -20,6 +23,14 @@ public abstract class BombEntity extends MagicProjectileEntity {
 
     public BombEntity(EntityType<? extends BombEntity> type, Level level) {
         super(type, level);
+    }
+
+    public BombEntity(EntityType<? extends BombEntity> type, LivingEntity owner, Level level, ItemStack itemStack) {
+        super(type, owner, level, itemStack);
+    }
+
+    public BombEntity(EntityType<? extends BombEntity> type, double x, double y, double z, Level level, ItemStack itemStack) {
+        super(type, x, y, z, level, itemStack);
     }
 
     @Override

@@ -34,19 +34,16 @@ public enum ElementEnum implements StringRepresentable {
             id -> id >= 0 && id < ElementEnum.values().length ? ElementEnum.values()[id] : ElementEnum.MAGIC,
             ElementEnum::ordinal
     ).cast();
+    public static final ElementEnum DEFAULT = ElementEnum.MAGIC;
 
     ElementEnum(Style colour, String name) {
         this(colour, name, Wizardry.MODID);
     }
 
-    ElementEnum(Style colour, String name, String modid) {
+    ElementEnum(Style colour, String name, String mod_id) {
         this.colour = colour;
         this.unlocalisedName = name;
-        this.icon = Identifier.fromNamespaceAndPath(modid, "textures/gui/container/element_icon_" + unlocalisedName + ".png");
-    }
-
-    public static ElementEnum getDefault() {
-        return ElementEnum.MAGIC;
+        this.icon = Identifier.fromNamespaceAndPath(mod_id, "textures/gui/container/element_icon_" + unlocalisedName + ".png");
     }
 
     public static ElementEnum fromName(String name) {

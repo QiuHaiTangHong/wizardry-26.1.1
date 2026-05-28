@@ -944,7 +944,7 @@ public final class WizardryItems {
     );
     public static final DeferredItem<Item> IDENTIFICATION_SCROLL = registerItem(
             "identification_scroll",
-            IdentificationScrollItem::new,
+            properties -> new IdentificationScrollItem(properties.rarity(Rarity.UNCOMMON)),
             WizardryCreativeTabs.TabsEnum.WIZARDRY
     );
     public static final DeferredItem<WandUpgradeItem> STORAGE_UPGRADE = registerItem(
@@ -992,16 +992,6 @@ public final class WizardryItems {
             WandUpgradeItem::new,
             WizardryCreativeTabs.TabsEnum.WIZARDRY
     );
-    public static final DeferredItem<Item> ASTRAL_DIAMOND = registerItem(
-            "astral_diamond",
-            properties -> new Item(properties.rarity(Rarity.RARE)),
-            WizardryCreativeTabs.TabsEnum.WIZARDRY
-    );
-    public static final DeferredItem<Item> PURIFYING_ELIXIR = registerItem(
-            "purifying_elixir",
-            PurifyingElixirItem::new,
-            WizardryCreativeTabs.TabsEnum.WIZARDRY
-    );
     public static final DeferredHolder<Item, ArmourUpgradeItem> RESPLENDENT_THREAD = registerItem(
             "resplendent_thread",
             properties -> new ArmourUpgradeItem(properties.stacksTo(1).rarity(Rarity.EPIC)),
@@ -1015,6 +1005,16 @@ public final class WizardryItems {
     public static final DeferredHolder<Item, ArmourUpgradeItem> ETHEREAL_CRYSTALWEAVE = registerItem(
             "ethereal_crystalweave",
             properties -> new ArmourUpgradeItem(properties.stacksTo(1).rarity(Rarity.EPIC)),
+            WizardryCreativeTabs.TabsEnum.WIZARDRY
+    );
+    public static final DeferredItem<Item> ASTRAL_DIAMOND = registerItem(
+            "astral_diamond",
+            properties -> new Item(properties.rarity(Rarity.RARE)),
+            WizardryCreativeTabs.TabsEnum.WIZARDRY
+    );
+    public static final DeferredItem<Item> PURIFYING_ELIXIR = registerItem(
+            "purifying_elixir",
+            properties -> new PurifyingElixirItem(properties.rarity(Rarity.RARE)),
             WizardryCreativeTabs.TabsEnum.WIZARDRY
     );
     public static final DeferredItem<FireBombItem> FIRE_BOMB = registerItem(

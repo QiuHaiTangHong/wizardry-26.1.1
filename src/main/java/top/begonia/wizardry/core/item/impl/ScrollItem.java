@@ -8,7 +8,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseAnimation;
 import org.jspecify.annotations.NonNull;
-import top.begonia.wizardry.core.data.json.definition.spell.part.SpellModifiers;
+import top.begonia.wizardry.core.data.runtime.SpellContextFlow;
 import top.begonia.wizardry.core.item.ISpellCastingItem;
 import top.begonia.wizardry.core.item.IWorkbenchItem;
 import top.begonia.wizardry.core.registry.WizardryComponents;
@@ -45,12 +45,12 @@ public class ScrollItem extends Item implements ISpellCastingItem, IWorkbenchIte
     }
 
     @Override
-    public boolean canCast(ItemStack stack, AbstractSpell spell, Player caster, ItemUseAnimation hand, int castingTick, SpellModifiers modifiers) {
+    public boolean canCast(ItemStack stack, AbstractSpell spell, Player caster, ItemUseAnimation hand, int castingTick, SpellContextFlow modifiers) {
         return false;
     }
 
     @Override
-    public boolean cast(ItemStack stack, AbstractSpell spell, Player caster, ItemUseAnimation hand, int castingTick, SpellModifiers modifiers) {
+    public boolean cast(ItemStack stack, AbstractSpell spell, Player caster, ItemUseAnimation hand, int castingTick, SpellContextFlow modifiers) {
         return false;
     }
 

@@ -1,0 +1,26 @@
+package top.begonia.wizardry.client.model.loader;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.resources.Identifier;
+import net.neoforged.neoforge.client.model.UnbakedModelLoader;
+import org.jspecify.annotations.NonNull;
+import top.begonia.wizardry.Wizardry;
+import top.begonia.wizardry.client.render.unbaked.GlowUnbakedModel;
+
+public class SpecialModelLoader implements UnbakedModelLoader<GlowUnbakedModel> {
+    public static final SpecialModelLoader INSTANCE = new SpecialModelLoader();
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Wizardry.MODID, "special_model_loader");
+
+    private SpecialModelLoader() {
+    }
+
+    @Override
+    public @NonNull GlowUnbakedModel read(@NonNull JsonObject jsonObject, @NonNull JsonDeserializationContext context) throws JsonParseException {
+        jsonObject.remove("loader");
+        UnbakedModel vanillaModel = context.deserialize(jsonObject, UnbakedModel.class);
+        return new GlowUnbakedModel(vanillaModel);
+    }
+}

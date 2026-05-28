@@ -81,6 +81,11 @@ public class WizardryParticleOptions implements ParticleOptions {
         return this;
     }
 
+    public WizardryParticleOptions radius(float radius) {
+        this.radius = radius;
+        return this;
+    }
+
     public WizardryParticleOptions spin(double radius, double speed) {
         this.radius = radius;
         this.rpt = speed;

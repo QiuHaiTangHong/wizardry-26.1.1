@@ -1,0 +1,45 @@
+{
+  "pools": [
+    {
+      "name": "wizardry",
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        },
+        {
+          "condition": "minecraft:random_chance_with_enchantment",
+          "enchantment": "minecraft:looting",
+          "chances": [
+            0.02,
+            0.03,
+            0.04,
+            0.05
+          ]
+        }
+      ],
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "value": "wizardry:spell_book",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "wizardry:random_spell",
+              "tiers": [
+                "novice",
+                "apprentice",
+                "advanced"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "value": "wizardry:ruined_spell_book",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,11 +1,12 @@
 package top.begonia.wizardry.core.entity.projectile.bomb;
 
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import org.jspecify.annotations.NonNull;
+import top.begonia.wizardry.core.registry.WizardryItems;
 
 public class SparkBombEntity extends BombEntity {
-
-    public static final String SECONDARY_MAX_TARGETS = "secondary_max_targets";
 
     public SparkBombEntity(EntityType<? extends SparkBombEntity> type, Level level) {
         super(type, level);
@@ -15,4 +16,10 @@ public class SparkBombEntity extends BombEntity {
     public int getLifetime() {
         return -1;
     }
+
+    @Override
+    protected @NonNull Item getDefaultItem() {
+        return WizardryItems.SPARK_BOMB.get();
+    }
+
 }

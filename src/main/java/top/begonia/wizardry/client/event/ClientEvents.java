@@ -2,6 +2,7 @@ package top.begonia.wizardry.client.event;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.Item;
@@ -17,9 +18,11 @@ import top.begonia.wizardry.Wizardry;
 import top.begonia.wizardry.client.data.WizardryClientDataManager;
 import top.begonia.wizardry.client.data.definition.handbook.HandbookData;
 import top.begonia.wizardry.client.gui.BookshelfScreen;
+import top.begonia.wizardry.client.model.loader.SpecialModelLoader;
 import top.begonia.wizardry.client.network.ClientPayloadHandler;
 import top.begonia.wizardry.client.particle.impl.*;
 import top.begonia.wizardry.client.render.*;
+import top.begonia.wizardry.client.render.unbaked.SpecialItemUnbakedModel;
 import top.begonia.wizardry.client.util.GenericParticleProvider;
 import top.begonia.wizardry.client.gui.ArcaneWorkbenchScreen;
 import top.begonia.wizardry.client.model.RobeArmourModel;
@@ -48,9 +51,32 @@ public class ClientEvents {
     }
 
     @SubscribeEvent
+    public static void onRegisterItemModels(@NonNull RegisterItemModelsEvent event) {
+        event.register(
+                Identifier.fromNamespaceAndPath(Wizardry.MODID, "special_item"),
+                SpecialItemUnbakedModel.MAP_CODEC
+        );
+    }
+
+    @SubscribeEvent
+    public static void registerEntityRenderers(EntityRenderersEvent.@NonNull RegisterRenderers event) {
+        event.registerEntityRenderer(WizardryEntities.FIRE_BOMB.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(WizardryEntities.POISON_BOMB.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(WizardryEntities.SMOKE_BOMB.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(WizardryEntities.SPARK_BOMB.get(), ThrownItemRenderer::new);
+
+    }
+
+    @SubscribeEvent
+    public static void onRegisterModelLoaders(ModelEvent.@NonNull RegisterLoaders event) {
+        event.register(SpecialModelLoader.ID, SpecialModelLoader.INSTANCE);
+    }
+
+    @SubscribeEvent
     public static void registerParticleFactories(@NonNull RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(WizardryParticles.DUST.get(), spriteSet -> new GenericParticleProvider(spriteSet, DustParticle::new));
         event.registerSpriteSet(WizardryParticles.FLASH.get(), spriteSet -> new GenericParticleProvider(spriteSet, FlashParticle::new));
+        event.registerSpriteSet(WizardryParticles.MAGIC_FIRE.get(), spriteSet -> new GenericParticleProvider(spriteSet, SparkParticle::new));
     }
 
     @SubscribeEvent

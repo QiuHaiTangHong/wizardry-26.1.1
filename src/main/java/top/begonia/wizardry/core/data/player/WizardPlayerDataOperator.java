@@ -12,16 +12,15 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
 import top.begonia.wizardry.core.config.ServerConfig;
 import top.begonia.wizardry.core.constants.TierEnum;
-import top.begonia.wizardry.core.data.json.definition.spell.part.SpellModifiers;
 import top.begonia.wizardry.core.data.packet.CastContinuousSpellPacket;
+import top.begonia.wizardry.core.data.spell.definition.spell.part.SpellContext;
 import top.begonia.wizardry.core.enchantment.Imbuement;
-import top.begonia.wizardry.core.event.SpellCastEvent;
+import top.begonia.wizardry.core.api.event.SpellCastEvent;
 import top.begonia.wizardry.core.registry.WizardryAttachment;
 import top.begonia.wizardry.core.registry.WizardrySpells;
 import top.begonia.wizardry.core.spell.AbstractSpell;
@@ -35,7 +34,7 @@ public class WizardPlayerDataOperator {
     private final WizardPlayerData data;
     private AbstractSpell castCommandSpell;
     private int castCommandTick;
-    private SpellModifiers castCommandModifiers;
+    private SpellContext castCommandContext;
     private int castCommandDuration;
     public double prevMotionY;
     private static final int IMBUEMENT_UPDATE_INTERVAL = 20;
@@ -81,65 +80,17 @@ public class WizardPlayerDataOperator {
     }
 
     public void setImbuementDuration(Holder<Enchantment> enchantmentHolder, int duration) {
-//        if (enchantmentHolder.value() instanceof Imbuement) {
-//            String registryKey = enchantmentHolder.unwrapKey().orElseThrow().identifier().toString();
-//            this.data.imbuementDurations().put(registryKey, duration);
-//        } else {
-//            throw new IllegalArgumentException("Attempted to set an imbuement duration for something that isn't an Imbuement!");
-//        }
     }
 
     @SuppressWarnings("unlikely-arg-type")
     public int getImbuementDuration(Enchantment enchantment) {
-//        Integer i = this.data.imbuementDurations().get(enchantment);
-//        return i == null ? 0 : i;
         return 0;
     }
 
     private void updateImbuedItems() {
-//        Set<Imbuement> activeImbuements = new HashSet<Imbuement>();
-//
-//        for (ItemStack stack : player.getInventory().mainInventory) {
-//            updateImbutedItem(stack, activeImbuements);
-//        }
-//        for (ItemStack stack : player.getInventory().armorInventory) {
-//            updateImbutedItem(stack, activeImbuements);
-//        }
-//        for (ItemStack stack : player.getInventory().offHandInventory) {
-//            updateImbutedItem(stack, activeImbuements);
-//        }
-//
-//        this.data.imbuementDurations().keySet().retainAll(activeImbuements);
     }
 
     private void updateImbutedItem(ItemStack stack, Set<Imbuement> activeImbuements) {
-//        if (stack.isItemEnchanted()) {
-//
-//            NBTTagList enchantmentList = stack.getItem() == Items.ENCHANTED_BOOK ?
-//                    ItemEnchantedBook.getEnchantments(stack) : stack.getEnchantmentTagList();
-//
-//            Iterator<NBTBase> iterator = enchantmentList.iterator();
-//            // For each of the item's enchantments
-//            while (iterator.hasNext()) {
-//                NBTTagCompound enchantmentTag = (NBTTagCompound) iterator.next();
-//                Enchantment enchantment = Enchantment.getEnchantmentByID(enchantmentTag.getShort("id"));
-//                // Ignores the enchantment unless it is an imbuement
-//                if (enchantment instanceof Imbuement) {
-//                    int duration = this.getImbuementDuration(enchantment);
-//                    // If the imbuement is still active:
-//                    if (duration > 0) {
-//                        // Decrements the timer
-//                        this.imbuementDurations.put((Imbuement) enchantment, duration - IMBUEMENT_UPDATE_INTERVAL);
-//                        // Adds this imbuement to the set of imbuements that need to be kept
-//                        activeImbuements.add((Imbuement) enchantment);
-//                    } else {
-//                        // Otherwise, removes the enchantment from the item
-//                        ((Imbuement) enchantment).onImbuementRemoval(stack);
-//                        iterator.remove(); // FIXME: Apparently this can cause a CME
-//                    }
-//                }
-//            }
-//        }
     }
 
     public boolean toggleAlly(Player player) {
@@ -170,14 +121,14 @@ public class WizardPlayerDataOperator {
         return currentTeam.getPlayers().stream().anyMatch(this.data.allyNames()::contains);
     }
 
-    public void startCastingContinuousSpell(AbstractSpell spell, SpellModifiers modifiers, int duration) {
+    public void startCastingContinuousSpell(AbstractSpell spell, SpellContext context, int duration) {
 
         this.castCommandSpell = spell;
-        this.castCommandModifiers = modifiers;
+        this.castCommandContext = context;
         this.castCommandDuration = duration;
 
         if (!this.player.level().isClientSide()) {
-            CastContinuousSpellPacket packet = new CastContinuousSpellPacket(this.player.getId(), spell, modifiers, duration);
+            CastContinuousSpellPacket packet = new CastContinuousSpellPacket(this.player.getId(), spell, context, duration);
             PacketDistributor.sendToPlayersInDimension((ServerLevel) this.player.level(), packet);
         }
     }
@@ -185,10 +136,10 @@ public class WizardPlayerDataOperator {
     public void stopCastingContinuousSpell() {
         this.castCommandSpell = WizardrySpells.NONE.get();
         this.castCommandTick = 0;
-        this.castCommandModifiers.reset();
+        this.castCommandContext = SpellContext.DEFAULT;
 
         if (!this.player.level().isClientSide()) {
-            CastContinuousSpellPacket packet = new CastContinuousSpellPacket(this.player.getId(), WizardrySpells.NONE.get(), this.castCommandModifiers, this.castCommandDuration);
+            CastContinuousSpellPacket packet = new CastContinuousSpellPacket(this.player.getId(), WizardrySpells.NONE.get(), this.castCommandContext, this.castCommandDuration);
             PacketDistributor.sendToPlayersInDimension((ServerLevel) this.player.level(), packet);
         }
     }
@@ -202,13 +153,13 @@ public class WizardPlayerDataOperator {
                 return;
             }
 
-            if (NeoForge.EVENT_BUS.post(new SpellCastEvent.Tick(SpellCastEvent.Source.COMMAND, castCommandSpell, player, castCommandModifiers, castCommandTick)).isCanceled()) {
+            if (NeoForge.EVENT_BUS.post(new SpellCastEvent.Tick(SpellCastEvent.Source.COMMAND, castCommandSpell, player, castCommandContext, castCommandTick)).isCanceled()) {
                 this.stopCastingContinuousSpell();
                 return;
             }
 
-            if (this.castCommandSpell.cast(player.level(), player, InteractionHand.MAIN_HAND, castCommandTick, this.castCommandModifiers) && this.castCommandTick == 0) {
-                NeoForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.COMMAND, castCommandSpell, player, castCommandModifiers));
+            if (this.castCommandSpell.cast(player.level(), player, InteractionHand.MAIN_HAND, castCommandTick, this.castCommandContext) && this.castCommandTick == 0) {
+                NeoForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.COMMAND, castCommandSpell, player, castCommandContext));
             }
 
             castCommandTick++;
