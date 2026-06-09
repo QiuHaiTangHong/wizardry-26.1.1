@@ -80,8 +80,8 @@ public class LecternScreen extends SpellInfoScreen implements ISpellSortable {
     private Button indexButton;
     private Button locateButton;
 
-    private Button[] sortButtons = new Button[3];
-    private SpellButton[] spellButtons = new SpellButton[SPELL_BUTTON_COUNT];
+    private final Button[] sortButtons = new Button[3];
+    private final SpellButton[] spellButtons = new SpellButton[SPELL_BUTTON_COUNT];
 
     /**
      * The spell currently being viewed, or null if the index is being viewed.

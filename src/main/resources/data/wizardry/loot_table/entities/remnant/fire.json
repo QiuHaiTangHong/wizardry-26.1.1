@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "value": "wizardry:spectral_dust",
+          "name": "wizardry:spectral_dust",
           "weight": 1,
           "functions": [
             {

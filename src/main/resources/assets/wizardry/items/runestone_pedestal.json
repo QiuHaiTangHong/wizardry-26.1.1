@@ -5,10 +5,6 @@
     "block_state_property": "element",
     "cases": [
       {
-        "when": "magic",
-        "model": { "type": "wizardry:special_item", "model": "wizardry:block/magic_runestone_pedestal" }
-      },
-      {
         "when": "fire",
         "model": { "type": "wizardry:special_item", "model": "wizardry:block/fire_runestone_pedestal" }
       },

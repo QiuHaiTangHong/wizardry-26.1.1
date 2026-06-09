@@ -6,8 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "wizardry:healing_matching_book",
-          "value": "wizardry:spell_book",
+          "name": "wizardry:spell_book",
           "weight": 3,
           "functions": [
             {
@@ -21,8 +20,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "wizardry:random_book",
-          "value": "wizardry:spell_book",
+          "name": "wizardry:spell_book",
           "weight": 2,
           "functions": [
             {

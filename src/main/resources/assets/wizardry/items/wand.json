@@ -289,7 +289,7 @@
     ],
     "fallback": {
       "type": "minecraft:model",
-      "model": "wizardry:item/wand/magic_wand"
+      "model": "wizardry:item/wand/novice_magic_wand"
     }
   }
 }

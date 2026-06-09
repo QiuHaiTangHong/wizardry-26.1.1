@@ -11,12 +11,15 @@ import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
 import top.begonia.wizardry.core.constants.ElementEnum;
 import top.begonia.wizardry.core.loot.RandomSpell;
+import top.begonia.wizardry.core.loot.WizardSpell;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 public final class WizardryLoots {
     private WizardryLoots() {
@@ -28,7 +31,7 @@ public final class WizardryLoots {
     public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> LOOT_MODIFIERS =
             DeferredRegister.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, Wizardry.MODID);
 
-    private static ResourceKey<LootTable> generateResourceKey(String path) {
+    private static @NonNull ResourceKey<LootTable> generateResourceKey(String path) {
         return ResourceKey.create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(Wizardry.MODID, path));
     }
 
@@ -53,8 +56,10 @@ public final class WizardryLoots {
     public static final ResourceKey<LootTable> JUNK_ADDITIONS = generateResourceKey("gameplay/fishing/junk_additions");
     public static final ResourceKey<LootTable> TREASURE_ADDITIONS = generateResourceKey("gameplay/fishing/treasure_additions");
 
-    public static final DeferredHolder<MapCodec<? extends LootItemFunction>, MapCodec<RandomSpell>> RANDOM_SPELL =
+    public static final Supplier<MapCodec<RandomSpell>> RANDOM_SPELL =
             LOOT_FUNCTIONS.register("random_spell", () -> RandomSpell.CODEC);
+    public static final Supplier<MapCodec<WizardSpell>> WIZARD_SPELL =
+            LOOT_FUNCTIONS.register("wizard_spell", () -> WizardSpell.CODEC);
 
     public static void register(IEventBus eventBus) {
         LOOT_FUNCTIONS.register(eventBus);

@@ -7,21 +7,21 @@
           "condition": "minecraft:killed_by_player"
         },
         {
-          "condition": "minecraft:random_chance_with_enchantment",
+          "condition": "minecraft:random_chance_with_enchanted_bonus",
           "enchantment": "minecraft:looting",
-          "chances": [
-            0.02,
-            0.03,
-            0.04,
-            0.05
-          ]
+          "unenchanted_chance": 0.02,
+          "enchanted_chance": {
+            "type": "minecraft:linear",
+            "base": 0.03,
+            "per_level_above_first": 0.01
+          }
         }
       ],
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "value": "wizardry:spell_book",
+          "name": "wizardry:spell_book",
           "weight": 1,
           "functions": [
             {
@@ -36,7 +36,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:ruined_spell_book",
+          "name": "wizardry:ruined_spell_book",
           "weight": 1
         }
       ]

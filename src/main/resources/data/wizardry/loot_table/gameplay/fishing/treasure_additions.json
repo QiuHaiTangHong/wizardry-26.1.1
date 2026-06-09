@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "value": "wizardry:spell_book",
+          "name": "wizardry:spell_book",
           "weight": 1,
           "functions": [
             {

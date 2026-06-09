@@ -3,7 +3,6 @@ package top.begonia.wizardry.core.entity.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -20,8 +19,6 @@ import javax.annotation.Nullable;
 public class LecternBlockEntity extends BlockEntity {
 
     public static final double BOOK_OPEN_DISTANCE = 5;
-
-    private static final RandomSource rand = RandomSource.create();
 
     public int ticksExisted;
     public float pageFlip;
@@ -48,9 +45,9 @@ public class LecternBlockEntity extends BlockEntity {
 
             this.bookSpread += 0.1f;
 
-            if (this.bookSpread < 0.5f || rand.nextInt(40) == 0) {
+            if (this.bookSpread < 0.5f || level.getRandom().nextInt(40) == 0) {
                 float f1 = this.flipT;
-                while (f1 == flipT) this.flipT += (float) (rand.nextInt(4) - rand.nextInt(4));
+                while (f1 == flipT) this.flipT += (float) (level.getRandom().nextInt(4) - level.getRandom().nextInt(4));
             }
 
         } else {

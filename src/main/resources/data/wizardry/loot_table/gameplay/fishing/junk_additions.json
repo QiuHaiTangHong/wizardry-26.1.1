@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "value": "wizardry:ruined_spell_book",
+          "name": "wizardry:ruined_spell_book",
           "weight": 1
         }
       ]

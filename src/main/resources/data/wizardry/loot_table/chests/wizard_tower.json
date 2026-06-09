@@ -35,7 +35,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:magic_crystal",
+          "name": "wizardry:magic_crystal",
           "weight": 5,
           "functions": [
             {
@@ -50,7 +50,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:spell_book",
+          "name": "wizardry:spell_book",
           "weight": 20,
           "functions": [
             {
@@ -61,7 +61,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:scroll",
+          "name": "wizardry:scroll",
           "weight": 7,
           "functions": [
             {
@@ -80,7 +80,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:identification_scroll",
+          "name": "wizardry:identification_scroll",
           "weight": 3
         }
       ]

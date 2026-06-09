@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "value": "wizardry:magic_crystal",
+          "name": "wizardry:magic_crystal",
           "weight": 1,
           "functions": [
             {
@@ -37,21 +37,21 @@
           "condition": "minecraft:killed_by_player"
         },
         {
-          "condition": "minecraft:random_chance_with_enchantment",
+          "condition": "minecraft:random_chance_with_enchanted_bonus",
           "enchantment": "minecraft:looting",
-          "chances": [
-            0.05,
-            0.06,
-            0.07,
-            0.08
-          ]
+          "unenchanted_chance": 0.05,
+          "enchanted_chance": {
+            "type": "minecraft:linear",
+            "base": 0.06,
+            "per_level_above_first": 0.01
+          }
         }
       ],
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "value": "wizardry:spell_book",
+          "name": "wizardry:spell_book",
           "weight": 1,
           "functions": [
             {

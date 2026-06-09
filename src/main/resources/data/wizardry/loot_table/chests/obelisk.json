@@ -21,7 +21,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:spell_book",
+          "name": "wizardry:spell_book",
           "weight": 20,
           "functions": [
             {
@@ -37,7 +37,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:scroll",
+          "name": "wizardry:scroll",
           "weight": 7,
           "functions": [
             {
@@ -61,12 +61,12 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:identification_scroll",
+          "name": "wizardry:identification_scroll",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "value": "minecraft:gold_nugget",
+          "name": "minecraft:gold_nugget",
           "weight": 5,
           "functions": [
             {
@@ -81,12 +81,12 @@
         },
         {
           "type": "minecraft:item",
-          "value": "minecraft:emerald",
+          "name": "minecraft:emerald",
           "weight": 1
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:grand_crystal",
+          "name": "wizardry:grand_crystal",
           "weight": 1
         }
       ]
@@ -106,7 +106,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:magic_crystal",
+          "name": "wizardry:magic_crystal",
           "weight": 5,
           "functions": [
             {
@@ -121,27 +121,27 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:firebomb",
+          "name": "wizardry:fire_bomb",
           "weight": 4
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:poison_bomb",
+          "name": "wizardry:poison_bomb",
           "weight": 4
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:smoke_bomb",
+          "name": "wizardry:smoke_bomb",
           "weight": 4
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:spark_bomb",
+          "name": "wizardry:spark_bomb",
           "weight": 4
         },
         {
           "type": "minecraft:item",
-          "value": "minecraft:book",
+          "name": "minecraft:book",
           "weight": 2,
           "functions": [
             {
@@ -156,7 +156,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "minecraft:string",
+          "name": "minecraft:string",
           "weight": 2,
           "functions": [
             {
@@ -171,7 +171,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "minecraft:paper",
+          "name": "minecraft:paper",
           "weight": 2,
           "functions": [
             {
@@ -186,7 +186,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:crystal_shard",
+          "name": "wizardry:crystal_shard",
           "weight": 2,
           "functions": [
             {

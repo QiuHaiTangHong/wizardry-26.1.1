@@ -46,7 +46,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:spell_book",
+          "name": "wizardry:spell_book",
           "weight": 40,
           "functions": [
             {
@@ -57,7 +57,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:scroll",
+          "name": "wizardry:scroll",
           "weight": 14,
           "functions": [
             {
@@ -76,12 +76,12 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:identification_scroll",
+          "name": "wizardry:identification_scroll",
           "weight": 6
         },
         {
           "type": "minecraft:item",
-          "value": "minecraft:gold_ingot",
+          "name": "minecraft:gold_ingot",
           "weight": 6,
           "functions": [
             {
@@ -96,7 +96,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "minecraft:emerald",
+          "name": "minecraft:emerald",
           "weight": 2,
           "functions": [
             {
@@ -111,17 +111,17 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:astral_diamond",
+          "name": "wizardry:astral_diamond",
           "weight": 2
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:purifying_elixir",
+          "name": "wizardry:purifying_elixir",
           "weight": 1
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:grand_crystal",
+          "name": "wizardry:grand_crystal",
           "weight": 2
         }
       ]
@@ -141,7 +141,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:magic_crystal",
+          "name": "wizardry:magic_crystal",
           "weight": 5,
           "functions": [
             {
@@ -156,7 +156,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "minecraft:book",
+          "name": "minecraft:book",
           "weight": 2,
           "functions": [
             {
@@ -171,7 +171,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "minecraft:string",
+          "name": "minecraft:string",
           "weight": 2,
           "functions": [
             {
@@ -186,7 +186,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "minecraft:paper",
+          "name": "minecraft:paper",
           "weight": 2,
           "functions": [
             {
@@ -201,7 +201,7 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:crystal_shard",
+          "name": "wizardry:crystal_shard",
           "weight": 2,
           "functions": [
             {

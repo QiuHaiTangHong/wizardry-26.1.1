@@ -12,7 +12,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "value": "wizardry:scroll",
+          "name": "wizardry:scroll",
           "weight": 1,
           "functions": [
             {
@@ -41,22 +41,22 @@
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:firebomb",
+          "name": "wizardry:fire_bomb",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:poison_bomb",
+          "name": "wizardry:poison_bomb",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:smoke_bomb",
+          "name": "wizardry:smoke_bomb",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "value": "wizardry:spark_bomb",
+          "name": "wizardry:spark_bomb",
           "weight": 3
         }
       ]
