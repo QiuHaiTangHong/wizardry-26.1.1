@@ -1,4 +1,4 @@
-package top.begonia.wizardry.client.render;
+package top.begonia.wizardry.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.NonNull;
-import top.begonia.wizardry.client.render.state.ImbuementAltarRenderState;
+import top.begonia.wizardry.client.render.entity.state.ImbuementAltarRenderState;
 import top.begonia.wizardry.core.entity.block.ImbuementAltarBlockEntity;
 
 import javax.annotation.Nullable;

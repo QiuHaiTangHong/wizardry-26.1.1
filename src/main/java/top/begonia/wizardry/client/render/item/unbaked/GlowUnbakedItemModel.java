@@ -1,4 +1,4 @@
-package top.begonia.wizardry.client.render.unbaked;
+package top.begonia.wizardry.client.render.item.unbaked;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.MapCodec;
@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix4fc;
 import org.joml.Vector3fc;
 import org.jspecify.annotations.NonNull;
-import top.begonia.wizardry.client.render.SpecialItemRenderer;
+import top.begonia.wizardry.client.render.item.SpecialItemRenderer;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package top.begonia.wizardry.client.render;
+package top.begonia.wizardry.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -20,7 +20,7 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
-import top.begonia.wizardry.client.render.state.ArcaneWorkbenchRenderState;
+import top.begonia.wizardry.client.render.entity.state.ArcaneWorkbenchRenderState;
 import top.begonia.wizardry.core.entity.block.ArcaneWorkbenchBlockEntity;
 import top.begonia.wizardry.core.inventory.menu.ArcaneWorkbenchMenu;
 

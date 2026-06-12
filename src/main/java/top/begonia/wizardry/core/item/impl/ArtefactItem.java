@@ -2,6 +2,7 @@ package top.begonia.wizardry.core.item.impl;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -13,10 +14,23 @@ import top.begonia.wizardry.core.util.TooltipBuilder;
 import java.util.function.Consumer;
 
 public class ArtefactItem extends Item {
+    private boolean enabled = true;
+
     public ArtefactItem(Properties properties) {
         super(properties);
     }
 
+    public static boolean isArtefactActive(Player player, Item artefact) {
+        if (artefact instanceof ArtefactItem artefactItem) {
+            if (!artefactItem.enabled) {
+                return false;
+            }
+
+        } else {
+            throw new IllegalArgumentException("Not an artefact!");
+        }
+        return false;
+    }
 
     @SuppressWarnings("deprecation")
     @Deprecated

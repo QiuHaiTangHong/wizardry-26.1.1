@@ -8,6 +8,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import top.begonia.wizardry.Wizardry;
+import top.begonia.wizardry.core.entity.projectile.arrow.MagicMissileEntity;
 import top.begonia.wizardry.core.entity.projectile.bomb.FireBombEntity;
 import top.begonia.wizardry.core.entity.projectile.bomb.PoisonBombEntity;
 import top.begonia.wizardry.core.entity.projectile.bomb.SmokeBombEntity;
@@ -16,18 +17,25 @@ import top.begonia.wizardry.core.spell.AbstractSpell;
 import top.begonia.wizardry.core.spell.impl.*;
 import top.begonia.wizardry.core.spell.impl.projectile.ProjectileSpell;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public final class WizardrySpells {
-    public static final List<DeferredHolder<AbstractSpell, ? extends AbstractSpell>> spellHolders = new ArrayList<>();
     public static final ResourceKey<Registry<AbstractSpell>> SPELLS_KEY = ResourceKey.createRegistryKey(
             Identifier.fromNamespaceAndPath(Wizardry.MODID, "spells")
     );
     public static final DeferredRegister<AbstractSpell> SPELLS = DeferredRegister.create(SPELLS_KEY, Wizardry.MODID);
 
     public static final DeferredHolder<AbstractSpell, None> NONE = SPELLS.register("none", None::new);
-    public static final DeferredHolder<AbstractSpell, ArrowSpell> MAGIC_MISSILE = SPELLS.register("magic_missile", ArrowSpell::new);
+    public static final DeferredHolder<AbstractSpell, ArrowSpell<MagicMissileEntity>> MAGIC_MISSILE = SPELLS.register(
+            "magic_missile",
+            () -> {
+                ArrowSpell<MagicMissileEntity> spell = new ArrowSpell<>(
+                        Identifier.fromNamespaceAndPath(Wizardry.MODID, "magic_missile"),
+                        WizardryEntities.MAGIC_MISSILE,
+                        MagicMissileEntity::new
+                );
+                spell.soundValues(1, 1.4f, 0.4f);
+                return spell;
+            }
+    );
 
     public static final DeferredHolder<AbstractSpell, ProjectileSpell<FireBombEntity>> FIRE_BOMB = SPELLS.register(
             "fire_bomb",

@@ -1,4 +1,4 @@
-package top.begonia.wizardry.client.render.util;
+package top.begonia.wizardry.client.util;
 
 import com.mojang.blaze3d.pipeline.BlendFunction;
 import com.mojang.blaze3d.pipeline.ColorTargetState;

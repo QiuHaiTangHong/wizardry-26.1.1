@@ -1,4 +1,4 @@
-package top.begonia.wizardry.client.render.state;
+package top.begonia.wizardry.client.render.entity.state;
 
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.core.BlockPos;

@@ -1,4 +1,4 @@
-package top.begonia.wizardry.client.render;
+package top.begonia.wizardry.client.render.item;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.QuadInstance;
@@ -16,8 +16,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static top.begonia.wizardry.client.render.util.RenderTypes.getBaseRenderType;
-import static top.begonia.wizardry.client.render.util.RenderTypes.getOverlyRenderType;
+import static top.begonia.wizardry.client.util.RenderTypes.getBaseRenderType;
+import static top.begonia.wizardry.client.util.RenderTypes.getOverlyRenderType;
 
 public class SpecialItemRenderer implements SpecialModelRenderer<SpecialItemRenderer.State> {
 

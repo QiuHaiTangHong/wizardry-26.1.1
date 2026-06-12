@@ -1,4 +1,4 @@
-package top.begonia.wizardry.client.render.unbaked;
+package top.begonia.wizardry.client.render.block.unbaked;
 
 import net.minecraft.client.renderer.block.dispatch.ModelState;
 import net.minecraft.client.resources.model.ModelBaker;

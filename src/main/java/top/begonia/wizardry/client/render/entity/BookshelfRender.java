@@ -1,4 +1,4 @@
-package top.begonia.wizardry.client.render;
+package top.begonia.wizardry.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -27,7 +27,7 @@ import top.begonia.wizardry.Wizardry;
 import top.begonia.wizardry.client.data.manager.WizardryClientDataManager;
 import top.begonia.wizardry.client.data.definition.bookshelf.BookshelfBookSettings;
 import top.begonia.wizardry.client.data.definition.model.OnlyModelQuads;
-import top.begonia.wizardry.client.render.state.BookshelfRenderState;
+import top.begonia.wizardry.client.render.entity.state.BookshelfRenderState;
 import top.begonia.wizardry.core.entity.block.BookshelfBlockEntity;
 
 import javax.annotation.Nullable;

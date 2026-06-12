@@ -10,6 +10,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import top.begonia.wizardry.Wizardry;
+import top.begonia.wizardry.core.entity.projectile.arrow.MagicMissileEntity;
 import top.begonia.wizardry.core.entity.projectile.bomb.FireBombEntity;
 import top.begonia.wizardry.core.entity.projectile.bomb.PoisonBombEntity;
 import top.begonia.wizardry.core.entity.projectile.bomb.SmokeBombEntity;
@@ -57,6 +58,15 @@ public final class WizardryEntities {
             "spark_bomb",
             EntityType.Builder
                     .<SparkBombEntity>of(SparkBombEntity::new, MobCategory.MISC)
+                    .sized(0.25F, 0.25F)
+                    .clientTrackingRange(4)
+                    .updateInterval(10)
+    );
+
+    public static final DeferredHolder<EntityType<?>, EntityType<MagicMissileEntity>> MAGIC_MISSILE = register(
+            "magic_missile",
+            EntityType.Builder
+                    .of(MagicMissileEntity::new, MobCategory.MISC)
                     .sized(0.25F, 0.25F)
                     .clientTrackingRange(4)
                     .updateInterval(10)

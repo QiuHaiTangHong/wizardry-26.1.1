@@ -39,7 +39,7 @@ public class ProjectileSpell<T extends MagicProjectileEntity> extends AbstractSp
             Supplier<ItemStack> renderItemSupplier,
             QuadFunction<EntityType<? extends T>, LivingEntity, Level, ItemStack, T> projectileFactory
     ) {
-        super(identifier, ItemUseAnimation.BOW, false);
+        super(identifier, ItemUseAnimation.NONE, false);
         this.entityTypeSupplier = entityTypeSupplier;
         this.renderItemSupplier = renderItemSupplier;
         this.projectileFactory = projectileFactory;

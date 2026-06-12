@@ -26,7 +26,9 @@ import top.begonia.wizardry.client.model.loader.SpecialModelLoader;
 import top.begonia.wizardry.client.network.ClientPayloadHandler;
 import top.begonia.wizardry.client.particle.impl.*;
 import top.begonia.wizardry.client.render.*;
-import top.begonia.wizardry.client.render.unbaked.GlowUnbakedItemModel;
+import top.begonia.wizardry.client.render.armor.WizardryArmorRenderer;
+import top.begonia.wizardry.client.render.entity.*;
+import top.begonia.wizardry.client.render.item.unbaked.GlowUnbakedItemModel;
 import top.begonia.wizardry.client.gui.ArcaneWorkbenchScreen;
 import top.begonia.wizardry.client.model.RobeArmourModel;
 import top.begonia.wizardry.client.model.SageArmourModel;
@@ -85,7 +87,16 @@ public class ClientEvents {
         event.registerEntityRenderer(WizardryEntities.POISON_BOMB.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(WizardryEntities.SMOKE_BOMB.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(WizardryEntities.SPARK_BOMB.get(), ThrownItemRenderer::new);
-
+        event.registerEntityRenderer(WizardryEntities.MAGIC_MISSILE.get(), (context) -> new MagicArrowRenderer(
+                context,
+                Identifier.fromNamespaceAndPath(Wizardry.MODID, "textures/entity/magic_missile.png"),
+                false,
+                8.0,
+                4.0,
+                16,
+                9,
+                false
+        ));
     }
 
     @SubscribeEvent

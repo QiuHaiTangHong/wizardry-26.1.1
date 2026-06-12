@@ -8,7 +8,7 @@ import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.model.UnbakedModelLoader;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
-import top.begonia.wizardry.client.render.unbaked.GlowUnbakedBlockModel;
+import top.begonia.wizardry.client.render.block.unbaked.GlowUnbakedBlockModel;
 
 public class SpecialModelLoader implements UnbakedModelLoader<GlowUnbakedBlockModel> {
     public static final SpecialModelLoader INSTANCE = new SpecialModelLoader();
