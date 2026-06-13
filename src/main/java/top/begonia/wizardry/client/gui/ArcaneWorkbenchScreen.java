@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
-import top.begonia.wizardry.client.config.ClientConfig;
+import top.begonia.wizardry.core.config.ClientConfig;
 import top.begonia.wizardry.client.gui.widget.SpellSortButton;
 import top.begonia.wizardry.core.inventory.menu.ArcaneWorkbenchMenu;
 import top.begonia.wizardry.client.util.ISpellSortable;

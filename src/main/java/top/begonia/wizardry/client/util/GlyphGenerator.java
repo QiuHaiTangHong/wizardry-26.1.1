@@ -1,4 +1,4 @@
-package top.begonia.wizardry.client.data;
+package top.begonia.wizardry.client.util;
 
 import net.minecraft.resources.Identifier;
 import top.begonia.wizardry.core.registry.WizardrySpells;
@@ -7,16 +7,16 @@ import top.begonia.wizardry.core.spell.AbstractSpell;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClientGlyphData {
+public final class GlyphGenerator {
     private static Map<Identifier, String> randomNames = new HashMap<>();
     private static Map<Identifier, String> randomDescriptions = new HashMap<>();
 
-    private static final ClientGlyphData INSTANCE = new ClientGlyphData();
+    private static final GlyphGenerator INSTANCE = new GlyphGenerator();
 
-    private ClientGlyphData() {
+    private GlyphGenerator() {
     }
 
-    public static ClientGlyphData getInstance() {
+    public static GlyphGenerator getInstance() {
         return INSTANCE;
     }
 

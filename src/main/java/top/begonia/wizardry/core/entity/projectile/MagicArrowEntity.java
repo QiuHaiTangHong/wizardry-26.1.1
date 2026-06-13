@@ -1,7 +1,5 @@
 package top.begonia.wizardry.core.entity.projectile;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -18,11 +16,9 @@ import net.minecraft.world.entity.projectile.arrow.Arrow;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.*;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.core.damage.WizardryDamageType;
 import top.begonia.wizardry.core.item.impl.ArtefactItem;
@@ -35,13 +31,6 @@ public abstract class MagicArrowEntity extends Arrow {
     public static final double LAUNCH_Y_OFFSET = 0.1;
     public static final int SEEKING_TIME = 15;
 
-    private int blockX = -1;
-    private int blockY = -1;
-    private int blockZ = -1;
-    private int inData;
-    private boolean inGround;
-    int ticksInGround;
-    int ticksInAir;
     private int knockbackStrength;
     public float damageMultiplier = 1.0f;
 
@@ -109,9 +98,6 @@ public abstract class MagicArrowEntity extends Arrow {
     protected void tickInAir() {
     }
 
-    protected void onBlockHit(BlockHitResult blockHitResult) {
-    }
-
     protected void tickInGround() {
         this.discard();
     }
@@ -175,140 +161,53 @@ public abstract class MagicArrowEntity extends Arrow {
 
     @Override
     protected void onHitBlock(@NonNull BlockHitResult hitResult) {
-        this.blockX = hitResult.getBlockPos().getX();
-        this.blockY = hitResult.getBlockPos().getY();
-        this.blockY = hitResult.getBlockPos().getZ();
         this.onHitBlockAfter(hitResult);
         super.onHitBlock(hitResult);
     }
 
     @Override
     public void tick() {
-
-        super.tick();
-
-        if (getLifetime() >= 0 && this.tickCount > this.getLifetime()) {
-            this.discard();
+        if (this.isRemoved()) {
+            return;
         }
+        if (!this.isInGround() && this.getSeekingStrength() > 0) {
+            Vec3 velocity = this.getDeltaMovement();
+            Vec3 scanStart = this.position();
+            Vec3 scanEnd = scanStart.add(velocity.scale(SEEKING_TIME));
+            var hit = RayTracer.rayTrace(
+                    this.level(),
+                    this.getOwner(),
+                    scanStart,
+                    scanEnd,
+                    this.getSeekingStrength(),
+                    ClipContext.Block.COLLIDER,
+                    ClipContext.Fluid.NONE,
+                    LivingEntity.class,
+                    RayTracer.ignoreEntityFilter(null)
+            );
+            if (hit != null && AllyDesignationSystem.isValidTarget(this.getOwner(), hit.getEntity())) {
+                Entity targetEntity = hit.getEntity();
+                Vec3 direction = new Vec3(
+                        targetEntity.getX(),
+                        targetEntity.getY() + (targetEntity.getBbHeight() / 2.0F),
+                        targetEntity.getZ()
+                ).subtract(this.position())
+                        .normalize()
+                        .scale(velocity.length());
 
-        if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
-            Vec3 motion = this.getDeltaMovement();
-            double horizontalDistance = motion.x * motion.x + motion.z * motion.z;
-            float yaw = (float) (Mth.atan2(motion.x, motion.z) * (180.0D / Math.PI));
-            float pitch = (float) (Mth.atan2(motion.y, Mth.sqrt((float) horizontalDistance)) * (180.0D / Math.PI));
-            this.yRotO = yaw;
-            this.xRotO = pitch;
-        }
-
-        BlockPos blockpos = new BlockPos(this.blockX, this.blockY, this.blockZ);
-        BlockState blockstate = this.level().getBlockState(blockpos);
-        if (!blockstate.isAir()) {
-            VoxelShape collisionShape = blockstate.getCollisionShape(this.level(), blockpos);
-            if (!collisionShape.isEmpty()) {
-                AABB realWorldBox = collisionShape.bounds().move(blockpos);
-                if (realWorldBox.contains(this.position())) {
-                    this.inGround = true;
-                }
+                Vec3 moveDelta = this.getDeltaMovement();
+                this.setDeltaMovement(moveDelta.add(direction.subtract(moveDelta).scale(2.0D / SEEKING_TIME)));
             }
         }
-
-        if (this.shakeTime > 0) {
-            --this.shakeTime;
+        super.tick();
+        if (this.getLifetime() >= 0 && this.tickCount > this.getLifetime()) {
+            this.discard();
+            return;
         }
-        if (this.inGround) {
-            ++this.ticksInGround;
+        if (this.isInGround()) {
             this.tickInGround();
         } else {
             this.tickInAir();
-            this.ticksInGround = 0;
-            ++this.ticksInAir;
-            Vec3 currentPos = this.position();
-            Vec3 nextPos = currentPos.add(this.getDeltaMovement());
-            BlockHitResult blockHitResult = this.level().clip(new ClipContext(
-                    currentPos,
-                    nextPos,
-                    ClipContext.Block.COLLIDER,
-                    ClipContext.Fluid.NONE,
-                    this
-            ));
-            if (blockHitResult.getType() != HitResult.Type.MISS) {
-                nextPos = blockHitResult.getLocation();
-            }
-            EntityHitResult hitResult = this.findHitEntity(currentPos, nextPos);
-            if (hitResult != null) {
-                this.onHitEntity(hitResult);
-            } else {
-                this.onHitBlock(blockHitResult);
-            }
-
-            if (this.getSeekingStrength() > 0) {
-                Vec3 velocity = this.getDeltaMovement();
-                Vec3 scanStart = this.position();
-                Vec3 scanEnd = scanStart.add(velocity.scale(SEEKING_TIME));
-                var hit = RayTracer.rayTrace(
-                        this.level(),
-                        this.getOwner(),
-                        scanStart,
-                        scanEnd,
-                        this.getSeekingStrength(),
-                        ClipContext.Block.COLLIDER,
-                        ClipContext.Fluid.NONE,
-                        LivingEntity.class,
-                        RayTracer.ignoreEntityFilter(null)
-                );
-                if (hit != null && AllyDesignationSystem.isValidTarget(this.getOwner(), hit.getEntity())) {
-                    Entity targetEntity = hit.getEntity();
-                    Vec3 direction = new Vec3(
-                            targetEntity.getX(),
-                            targetEntity.getY() + (targetEntity.getBbHeight() / 2.0F),
-                            targetEntity.getZ()
-                    ).subtract(this.position())
-                            .normalize()
-                            .scale(velocity.length());
-                    Vec3 moveDelta = this.getDeltaMovement();
-                    this.setDeltaMovement(moveDelta.add(direction.subtract(moveDelta).scale(2.0D / SEEKING_TIME)));
-                }
-            }
-            this.setPos(this.position().add(this.getDeltaMovement()));
-            this.setYRot((float) (Mth.atan2(this.getDeltaMovement().x, this.getDeltaMovement().z) * 180.0D / Mth.PI));
-            while (this.getXRot() - this.xRotO >= 180.0F) {
-                this.xRotO += 360.0F;
-            }
-
-            while (this.getYRot() - this.yRotO < -180.0F) {
-                this.yRotO -= 360.0F;
-            }
-
-            while (this.getYRot() - this.yRotO >= 180.0F) {
-                this.yRotO += 360.0F;
-            }
-            this.setXRot(Mth.lerp(0.2F, this.xRotO, this.getXRot()));
-            this.setYRot(Mth.lerp(0.2F, this.yRotO, this.getYRot()));
-            float drag = 0.99F;
-            if (this.isInWater()) {
-                Vec3 movement = this.getDeltaMovement();
-                for (int l = 0; l < 4; ++l) {
-                    float f4 = 0.25F;
-                    this.level().addParticle(
-                            ParticleTypes.BUBBLE,
-                            this.getX() - movement.x * f4,
-                            this.getY() - movement.y * f4,
-                            this.getZ() - movement.z * f4,
-                            movement.x, movement.y, movement.z
-                    );
-                }
-                drag = 0.8F;
-            }
-            if (this.isInWaterOrRain()) {
-                this.clearFire();
-            }
-            if (this.doDeceleration()) {
-                this.setDeltaMovement(this.getDeltaMovement().scale(drag));
-            }
-            if (this.doGravity()) {
-                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.05D, 0.0D));
-            }
-            this.setPos(this.position());
         }
     }
 
@@ -323,20 +222,12 @@ public abstract class MagicArrowEntity extends Arrow {
     @Override
     protected void readAdditionalSaveData(@NonNull ValueInput valueInput) {
         super.readAdditionalSaveData(valueInput);
-        this.blockX = valueInput.getIntOr("xTile", 0);
-        this.blockY = valueInput.getIntOr("yTile", 0);
-        this.blockZ = valueInput.getIntOr("zTile", 0);
-        this.inData = valueInput.getIntOr("inData", 0);
         this.damageMultiplier = valueInput.getFloatOr("damageMultiplier", 0.0F);
     }
 
     @Override
     protected void addAdditionalSaveData(@NonNull ValueOutput valueOutput) {
         super.addAdditionalSaveData(valueOutput);
-        valueOutput.putInt("xTile", this.blockX);
-        valueOutput.putInt("yTile", this.blockY);
-        valueOutput.putInt("zTile", this.blockZ);
-        valueOutput.putInt("inData", this.inData);
         valueOutput.putFloat("damageMultiplier", this.damageMultiplier);
     }
 }

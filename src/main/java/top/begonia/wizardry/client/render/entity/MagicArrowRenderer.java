@@ -55,7 +55,6 @@ public class MagicArrowRenderer extends ArrowRenderer<MagicArrowEntity, ArrowRen
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(state.yRot - 90.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(state.xRot));
-        poseStack.translate(state.x, state.y, state.z);
         if (state.shake > 0.0F) {
             float shakeRot = -(float) Math.sin(state.shake * 3.0F) * state.shake;
             poseStack.mulPose(Axis.ZP.rotationDegrees(shakeRot));
@@ -91,16 +90,16 @@ public class MagicArrowRenderer extends ArrowRenderer<MagicArrowEntity, ArrowRen
 
                     for (int i = 0; i < 4; ++i) {
                         double angle = Math.toRadians(i * 90.0);
-                        float cos = (float) Math.cos(angle);
                         float sin = (float) Math.sin(angle);
-                        double y1 = -width * cos;
-                        double z1 = -width * sin;
-                        double y2 = width * cos;
-                        double z2 = width * sin;
 
                         float nx = 0.0F;
-                        float ny = -sin;
-                        float nz = cos;
+                        float nz = (float) Math.cos(angle);
+                        float ny = -(float) Math.sin(angle);
+
+                        double y1 = -width * nz;
+                        double z1 = -width * sin;
+                        double y2 = width * nz;
+                        double z2 = width * sin;
 
                         addMagicVertex(vertexConsumer, pose, -length, y1, z1, sideMinU, sideMinV, magicLight, nx, ny, nz);
                         addMagicVertex(vertexConsumer, pose, length, y1, z1, sideMaxU, sideMinV, magicLight, nx, ny, nz);
@@ -111,6 +110,7 @@ public class MagicArrowRenderer extends ArrowRenderer<MagicArrowEntity, ArrowRen
         );
 
         poseStack.popPose();
+        super.submit(state, poseStack, submitNodeCollector, camera);
     }
 
     private void addMagicVertex(@NonNull VertexConsumer consumer, PoseStack.Pose pose, double x, double y, double z, float u, float v, int light, float nx, float ny, float nz) {

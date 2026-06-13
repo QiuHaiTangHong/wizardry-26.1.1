@@ -64,7 +64,7 @@ public class ArrowSpell<T extends MagicArrowEntity> extends AbstractSpell {
     public boolean cast(@NonNull Level level, Player caster, InteractionHand hand, int ticksInUse, SpellContext context) {
         if (!level.isClientSide()) {
             T projectile = arrowFactory.apply(entityTypeSupplier.get(), level);
-            projectile.aim(caster, calculateVelocity(projectile, context, caster.getEyeHeight()
+            projectile.aim(caster, this.calculateVelocity(projectile, context, caster.getEyeHeight()
                     - (float) MagicArrowEntity.LAUNCH_Y_OFFSET));
             projectile.damageMultiplier = context.potency();
             addArrowExtras(projectile, caster, context);
@@ -103,7 +103,7 @@ public class ArrowSpell<T extends MagicArrowEntity> extends AbstractSpell {
     }
 
     @Override
-    public boolean cast(Level level, double x, double y, double z, Direction direction, int ticksInUse, int duration, SpellContext context) {
+    public boolean cast(@NonNull Level level, double x, double y, double z, Direction direction, int ticksInUse, int duration, SpellContext context) {
 
         if (!level.isClientSide()) {
             T projectile = arrowFactory.apply(entityTypeSupplier.get(), level);

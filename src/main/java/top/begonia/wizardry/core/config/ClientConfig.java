@@ -1,4 +1,4 @@
-package top.begonia.wizardry.client.config;
+package top.begonia.wizardry.core.config;
 
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -7,7 +7,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import top.begonia.wizardry.Wizardry;
 
 @EventBusSubscriber(modid = Wizardry.MODID)
-public class ClientConfig {
+public final class ClientConfig {
     public static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue BOOKS_PAUSE_GAME;

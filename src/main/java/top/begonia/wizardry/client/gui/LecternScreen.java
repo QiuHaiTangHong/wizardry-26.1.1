@@ -16,7 +16,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
-import top.begonia.wizardry.client.data.ClientGlyphData;
+import top.begonia.wizardry.client.util.GlyphGenerator;
 import top.begonia.wizardry.client.gui.widget.InvisibleButton;
 import top.begonia.wizardry.client.gui.widget.SpellSortButton;
 import top.begonia.wizardry.client.gui.widget.TurnPageButton;
@@ -351,7 +351,7 @@ public class LecternScreen extends SpellInfoScreen implements ISpellSortable {
                     } else {
                         extractor.text(
                                 getFont(),
-                                ClientGlyphData.getInstance().getGlyphName(spell),
+                                GlyphGenerator.getInstance().getGlyphName(spell),
                                 mouseX, mouseY,
                                 ARGB.color(255, 0, 0, 0),
                                 false

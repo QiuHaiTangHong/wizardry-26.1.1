@@ -7,7 +7,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import org.jspecify.annotations.NonNull;
 import top.begonia.wizardry.Wizardry;
-import top.begonia.wizardry.client.config.ClientConfig;
+import top.begonia.wizardry.core.config.ClientConfig;
 import top.begonia.wizardry.core.config.CommonConfig;
 import top.begonia.wizardry.core.registry.*;
 import top.begonia.wizardry.core.config.ServerConfig;

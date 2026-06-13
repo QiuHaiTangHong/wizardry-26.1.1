@@ -49,6 +49,13 @@ public class WizardPlayerData {
         this.recentSpells = new ArrayList<>(recentSpells);
     }
 
+    public boolean discoverSpell(AbstractSpell spell) {
+        if (spell instanceof None) {
+            return false;
+        }
+        return spellsDiscovered.add(spell);
+    }
+
     @Contract(" -> new")
     public static @NonNull WizardPlayerData getDefault() {
         return new WizardPlayerData();

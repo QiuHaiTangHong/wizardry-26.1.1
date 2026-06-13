@@ -1,17 +1,24 @@
 package top.begonia.wizardry.client.event;
 
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.equipment.Equippable;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModLoader;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -26,7 +33,6 @@ import top.begonia.wizardry.client.model.loader.SpecialModelLoader;
 import top.begonia.wizardry.client.network.ClientPayloadHandler;
 import top.begonia.wizardry.client.particle.impl.*;
 import top.begonia.wizardry.client.render.*;
-import top.begonia.wizardry.client.render.armor.WizardryArmorRenderer;
 import top.begonia.wizardry.client.render.entity.*;
 import top.begonia.wizardry.client.render.item.unbaked.GlowUnbakedItemModel;
 import top.begonia.wizardry.client.gui.ArcaneWorkbenchScreen;
@@ -39,38 +45,42 @@ import top.begonia.wizardry.core.registry.*;
 import top.begonia.wizardry.core.util.ArmourHelper;
 import top.begonia.wizardry.core.data.network.handbook.HandbookRecipesRequest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @EventBusSubscriber(modid = Wizardry.MODID)
 public class ClientEvents {
-    private static final Map<ModelLayerLocation, HumanoidModel<?>> modelLayerLocationHumanoidModelMap = new HashMap<>();
 
     @SubscribeEvent
     public static void onRegisterLayers(EntityRenderersEvent.@NonNull RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(ArmourHelper.ModelLayer.WIZARD_OUTER,
-                () -> WizardArmourModel.createLayerDefinition(new CubeDeformation(0.75F), 64, 64));
-        event.registerLayerDefinition(ArmourHelper.ModelLayer.WIZARD_INNER,
-                () -> WizardArmourModel.createLayerDefinition(new CubeDeformation(0.75F), 64, 32));
-        event.registerLayerDefinition(ArmourHelper.ModelLayer.SAGE_OUTER,
-                () -> SageArmourModel.createLayerDefinition(new CubeDeformation(0.75F), 64, 64));
-        event.registerLayerDefinition(ArmourHelper.ModelLayer.SAGE_INNER,
-                () -> SageArmourModel.createLayerDefinition(new CubeDeformation(0.75F), 64, 32));
-        event.registerLayerDefinition(ArmourHelper.ModelLayer.ROBE_OUTER,
-                () -> RobeArmourModel.createLayerDefinition(new CubeDeformation(0.75F), 64, 64));
-        event.registerLayerDefinition(ArmourHelper.ModelLayer.ROBE_INNER,
-                () -> RobeArmourModel.createLayerDefinition(new CubeDeformation(0.75F), 64, 32));
-    }
-
-    @SubscribeEvent
-    public static void onAddLayers(EntityRenderersEvent.@NonNull AddLayers event) {
-        EntityModelSet modelSet = event.getEntityModels();
-        modelLayerLocationHumanoidModelMap.put(ArmourHelper.ModelLayer.WIZARD_OUTER, new WizardArmourModel<>(modelSet.bakeLayer(ArmourHelper.ModelLayer.WIZARD_OUTER)));
-        modelLayerLocationHumanoidModelMap.put(ArmourHelper.ModelLayer.WIZARD_INNER, new WizardArmourModel<>(modelSet.bakeLayer(ArmourHelper.ModelLayer.WIZARD_INNER)));
-        modelLayerLocationHumanoidModelMap.put(ArmourHelper.ModelLayer.SAGE_OUTER, new SageArmourModel<>(modelSet.bakeLayer(ArmourHelper.ModelLayer.SAGE_OUTER)));
-        modelLayerLocationHumanoidModelMap.put(ArmourHelper.ModelLayer.SAGE_INNER, new SageArmourModel<>(modelSet.bakeLayer(ArmourHelper.ModelLayer.SAGE_INNER)));
-        modelLayerLocationHumanoidModelMap.put(ArmourHelper.ModelLayer.ROBE_OUTER, new RobeArmourModel<>(modelSet.bakeLayer(ArmourHelper.ModelLayer.ROBE_OUTER)));
-        modelLayerLocationHumanoidModelMap.put(ArmourHelper.ModelLayer.ROBE_INNER, new RobeArmourModel<>(modelSet.bakeLayer(ArmourHelper.ModelLayer.ROBE_INNER)));
+        final CubeDeformation OUTER_ARMOR_DEFORMATION = new CubeDeformation(1.0F);
+        final CubeDeformation INNER_ARMOR_DEFORMATION = new CubeDeformation(0.5F);
+        ImmutableMap.Builder<ModelLayerLocation, LayerDefinition> result = ImmutableMap.builder();
+        ArmourHelper.ModelLayers.WIZARD.putFrom(
+                WizardArmourModel
+                        .createArmorMeshSetExtension(INNER_ARMOR_DEFORMATION, OUTER_ARMOR_DEFORMATION)
+                        .map(((meshDefinition, equipmentSlot) -> equipmentSlot == EquipmentSlot.LEGS
+                                ? LayerDefinition.create(meshDefinition, 64, 32)
+                                : LayerDefinition.create(meshDefinition, 64, 64))
+                        ),
+                result
+        );
+        ArmourHelper.ModelLayers.SAGE.putFrom(
+                SageArmourModel
+                        .createArmorMeshSetExtension(INNER_ARMOR_DEFORMATION, OUTER_ARMOR_DEFORMATION)
+                        .map(((meshDefinition, equipmentSlot) -> equipmentSlot == EquipmentSlot.LEGS
+                                ? LayerDefinition.create(meshDefinition, 64, 32)
+                                : LayerDefinition.create(meshDefinition, 64, 64))
+                        ),
+                result
+        );
+        ArmourHelper.ModelLayers.ROBE.putFrom(
+                RobeArmourModel
+                        .createArmorMeshSetExtension(INNER_ARMOR_DEFORMATION, OUTER_ARMOR_DEFORMATION)
+                        .map(((meshDefinition, equipmentSlot) -> equipmentSlot == EquipmentSlot.LEGS
+                                ? LayerDefinition.create(meshDefinition, 64, 32)
+                                : LayerDefinition.create(meshDefinition, 64, 64))
+                        ),
+                result
+        );
+        result.build().forEach((modelLayerLocation, layerDefinition) -> event.registerLayerDefinition(modelLayerLocation, () -> layerDefinition));
     }
 
     @SubscribeEvent
@@ -160,7 +170,17 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void onRegisterClientExtensions(@NonNull RegisterClientExtensionsEvent event) {
-        event.registerItem(new WizardryArmorRenderer(modelLayerLocationHumanoidModelMap), WizardryItems.ARMOUR.get());
+        event.registerItem(new IClientItemExtensions() {
+            @Override
+            public @NonNull Model<?> getHumanoidArmorModel(@NonNull ItemStack itemStack, EquipmentClientInfo.@NonNull LayerType layerType, @NonNull Model original) {
+                Equippable equippable = itemStack.get(DataComponents.EQUIPPABLE);
+                if (equippable != null && equippable.assetId().isPresent()) {
+                    Model<?> model = ArmourHelper.getModelLayer(equippable.assetId().get(), equippable.slot());
+                    return model != null ? model : original;
+                }
+                return original;
+            }
+        }, WizardryItems.ARMOUR.get());
         for (DeferredHolder<MobEffect, ? extends MobEffect> effect : WizardryMobEffects.EFFECTS.getEntries()) {
             event.registerMobEffect(WizardryPotionRender.INSTANCE, effect.get());
         }

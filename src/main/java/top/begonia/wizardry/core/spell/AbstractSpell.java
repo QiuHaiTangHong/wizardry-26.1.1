@@ -62,13 +62,13 @@ public abstract class AbstractSpell implements Comparable<AbstractSpell> {
     public static final String ELEMENT_MATCH_PREFIX = "element";
     public static final String TYPE_MATCH_PREFIX = "type";
     public static final String DISCOVERED_MATCH_PREFIX = "discovered";
-    public static final String MODID_MATCH_PREFIX = "modid";
+    public static final String MOD_ID_MATCH_PREFIX = "modid";
 
     public static final String TIER_MATCH_ALIAS = "t";
     public static final String ELEMENT_MATCH_ALIAS = "e";
     public static final String TYPE_MATCH_ALIAS = "p";
     public static final String DISCOVERED_MATCH_ALIAS = "d";
-    public static final String MODID_MATCH_ALIAS = "m";
+    public static final String MOD_ID_MATCH_ALIAS = "m";
 
     public static final String MATCH_CONDITION_SEPARATOR = ";";
     public static final String MATCH_KEY_VALUE_SEPARATOR = "=";
@@ -154,8 +154,8 @@ public abstract class AbstractSpell implements Comparable<AbstractSpell> {
                     }
                     target = getType().getSerializedName().toLowerCase(Locale.ROOT);
                     break;
-                case MODID_MATCH_PREFIX:
-                case MODID_MATCH_ALIAS:
+                case MOD_ID_MATCH_PREFIX:
+                case MOD_ID_MATCH_ALIAS:
                     if (!discovered) {
                         return false;
                     }
